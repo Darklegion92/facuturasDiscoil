@@ -1,0 +1,69 @@
+<div class="abrir-modal animacion fadeIn" *ngIf="modalServicioService.modal">
+  <div  style="display: block;"
+      class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">
+            <strong>
+              {{titulo}}
+            </strong>
+          </h4>
+          <button (click)="cerrarModal()"
+            type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm">
+                <ul *ngIf="servicio"  class="list-group text-dark mb-1">
+                  <!-- <li class="list-group-item active">{{producto.categoria.nombre | uppercase}}</li> -->
+                  <!-- <li class="list-group-item ">{{producto.codigo}}</li> -->
+                  <li class="list-group-item">
+                    <strong>Servicio: </strong>
+                    {{servicio.nombre | uppercase}}
+                  </li>
+                  <li class="list-group-item">
+                      <strong>Descripcion: </strong>
+                    {{servicio.descripcion}}</li>
+                  <li *ngIf="authService.hasRole('ROLE_ADMIN')"
+                      class="list-group-item">
+                      <strong>Costo Repuesto: </strong>
+                      {{formatNumber(servicio.costoRepuesto)}}</li>
+                  <li class="list-group-item">
+                      <strong>Costo Servicio: </strong>
+                    {{formatNumber(servicio.costoServicio)}}
+                  </li>
+
+                  <li class="list-group-item">
+                      <strong>Ult. Movimiento: </strong>
+                    {{servicio.createAt | date:"fullDate"}}
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer mt-0">
+          <button *ngIf="authService.hasRole('ROLE_ADMIN')"
+                          type="button"
+                          class="btn btn-rounded btn-outline-secondary btn-xs mx-2"
+                          [routerLink]="['/servicios/form', servicio.id]"
+                    >
+                      Editar
+                    </button>
+          <button (click)="cerrarModal()"
+            type="button" class="btn btn-rounded btn-outline-dark btn-xs"
+            data-dismiss="modal">Cerrar
+          </button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+
+

@@ -1,0 +1,166 @@
+<ul class="alert alert-danger" *ngIf="errores?.length>0" >
+    <li  *ngFor="let err of errores" >
+      {{err}}
+    </li>
+</ul>
+<div class="card bg-dark text-white">
+    <div class="card-header">
+      {{titulo}}
+    </div>
+    <div class="card-body">
+      <form #productoForm="ngForm">
+         <!--  <div class="form-group row">
+              <label for="region" class="col-form-label col-sm-2">Categoria</label>
+              <div class="col-sm-6">
+                  <select  class="form-control"
+                            [compareWith]="compararCategoria"
+                            [(ngModel)]="producto.categoria" name="region"
+                            style="width: 500px;">
+                            <option
+                              [ngValue]="undefined">
+                              --- Selecionar Categoria ---
+                            </option>
+                            <option *ngFor="let categoria of categorias"
+                            [ngValue]="categoria">{{categoria.nombre}}</option>
+                  </select>
+              </div>
+            </div>
+           <div class="form-group row">
+              <label for="codigo" class="col-form-label col-sm-2">Codigo </label>
+              <div class="col-sm-6">
+                <input type="number" class="form-control"
+                        [(ngModel)]="producto.codigo"
+                        name="codigo"
+                        minlength="4"
+                    maxlength="4"
+                    #codigo="ngModel"
+                    requiered>
+                    <div *ngIf="codigo.invalid && (codigo.dirty || codigo.touched)"
+                    class="alert alert-danger">
+                        <div class="" *ngIf="codigo?.errors?.required" >
+                          Codigo es Requerido
+                        </div>
+                        <div class="" *ngIf="codigo?.errors?.minlength" >
+                          Codigo debe contener minimo 4 caracteres
+                        </div>
+                        <div class="" *ngIf="codigo?.errors?.maxlength" >
+                          Codigo debe contener maximo 4 caracteres
+                        </div>
+                    </div>
+              </div>
+            </div> -->
+
+        <div class="form-group row">
+          <label for="nombre" class="col-form-label col-sm-2">Nombre </label>
+          <div class="col-sm-6">
+            <input type="text" class="form-control"
+                    style="text-transform:uppercase;"
+                    [(ngModel)]="producto.nombre"
+                    name="nombre"
+                    minlength="3"
+                maxlength="50"
+                #nombre="ngModel"
+                requiered>
+                <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)"
+                class="alert alert-danger">
+                    <div class="" *ngIf="nombre?.errors?.required" >
+                      Nombre es Requerido
+                    </div>
+                    <div class="" *ngIf="nombre?.errors?.minlength" >
+                      Nombre debe contener minimo 3 caracteres
+                    </div>
+                    <div class="" *ngIf="nombre?.errors?.maxlength" >
+                      Nombre debe contener maximo 50 caracteres
+                    </div>
+                </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="descripcion" class="col-form-label col-sm-2">Descripcion </label>
+          <div class="col-sm-6">
+            <textarea class="form-control"
+                      [(ngModel)]="producto.descripcion"
+                      name="descripcion"
+                      >
+            </textarea>
+          </div>
+        </div>
+        <div class="form-group row">
+            <label for="precioCompra" class="col-form-label col-sm-2">Precio Compra:  $ </label>
+            <div class="col-sm-6">
+              <input type="number"
+                  class="form-control"
+                    [(ngModel)]="producto.precioCompra"
+                    name="precioCompra"
+                    minlength="1"
+                    #precioCompra="ngModel"
+                    requiered>
+                   <div class="alert alert-danger pt-2" *ngIf="precioCompra.invalid " >
+                      <div class="" *ngIf="!!precioCompra?.errors.requiered" >
+                        Precio Compra es Requerido
+                      </div>
+
+                  </div>
+            </div>
+          </div>
+          <div class="form-group row">
+              <label for="precio" class="col-form-label col-sm-2">Precio Venta:  $ </label>
+              <div class="col-sm-6">
+                <input type="number"
+                    class="form-control"
+                      [(ngModel)]="producto.precio"
+                      name="precio"
+                      minlength="1"
+                      #precio="ngModel"
+                      requiered>
+                      <div class="alert alert-danger pt-2" *ngIf="precio.invalid" >
+                        <div class="" *ngIf="precio?.errors.requiered" >
+                          Precio es Requerido
+                        </div>
+
+                    </div>
+              </div>
+            </div>
+            <div class="form-group row">
+                <label for="cantidad" class="col-form-label col-sm-2">Cantidad:   </label>
+                <div class="col-sm-6">
+                  <input type="number"
+                      class="form-control"
+                        [(ngModel)]="producto.cantidad"
+                        name="cantidad"
+                        minlength="1"
+                        #cantidad="ngModel"
+                        requiered>
+                        <div class="alert alert-danger pt-2" *ngIf="cantidad.invalid " >
+                          <div class="" *ngIf="cantidad?.errors.requiered" >
+                            Cantidad
+                          </div>
+
+                      </div>
+                </div>
+              </div>
+          <div class="form-group row">
+              <div class="col-sm-6">
+                <button class="btn btn-primary"
+                        role="button"
+                        (click)="create()"
+                        *ngIf="!producto.id else elseBlock"
+                        [disabled]="!productoForm.form.valid">
+                  Crear
+                </button>
+                <ng-template #elseBlock>
+                    <button class="btn btn-primary"
+                        role="button"
+                        (click)="update()"
+                        [disabled]="!productoForm.form.valid">
+                  Actualizar
+                </button>
+                </ng-template>
+
+              </div>
+            </div>
+      </form>
+    </div>
+
+  </div>
+

@@ -1,0 +1,250 @@
+<ul class="alert alert-danger" *ngIf="errores?.length>0" >
+    <li  *ngFor="let err of errores" >
+      {{err}}
+    </li>
+</ul>
+<div class="card bg-dark text-white">
+  <div class="card-header">
+    {{titulo}}
+  </div>
+  <div class="card-body">
+    <form #clienteForm="ngForm" >
+      <div class="form-group row">
+        <label for="documento" class="col-form-label col-sm-2">Documento</label>
+        <div class="col-sm-6">
+          <input type="number" class="form-control"
+                [(ngModel)]="cliente.documento"
+                name="documento"
+                minlength="3"
+                maxlength="15"
+                #documento="ngModel"
+                requiered>
+                <div class="alert alert-danger pt-2" *ngIf="documento.invalid && (documento.dirty || documento.touched)" >
+                    <div class="" *ngIf="documento?.errors.requiered" >
+                      Documento es Requerido
+                    </div>
+                    <div class="" *ngIf="documento?.errors.minlength" >
+                      Documento debe contener minimo 8 caracteres
+                    </div>
+                    <div class="" *ngIf="documento?.errors.maxlength" >
+                      Documento debe contener maximo 10 caracteres
+                    </div>
+                </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="nombre" class="col-form-label col-sm-2 ">Nombre </label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control "
+                  style="text-transform:uppercase;"
+                  [(ngModel)]="cliente.nombre"
+                  id="nombre"
+                  name="nombre"
+                  minlength="3"
+                  maxlength="15"
+                  #nombre="ngModel"
+                  ng-model="nombre"
+                  requiered>
+                  <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)"
+                          class="alert alert-danger">
+                    <div class="" *ngIf="nombre?.errors?.required" >
+                      Nombre es Requerido
+                    </div>
+                    <div class="" *ngIf="nombre?.errors?.minlength" >
+                      Nombre debe contener minimo 3 caracteres
+                    </div>
+                    <div class="" *ngIf="nombre?.errors?.maxlength" >
+                      Nombre debe contener maximo 15 caracteres
+                    </div>
+                </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="apellido" class="col-form-label col-sm-2">Apellido </label>
+        <div class="col-sm-6">
+          <input type="text"
+                  class="form-control"
+                  style="text-transform:uppercase;"
+                  [(ngModel)]="cliente.apellido"
+                  name="apellido"
+                  minlength="3"
+                  maxlength="15"
+                  #apellido="ngModel"
+                  requiered>
+                  <div class="alert alert-danger pt-2" *ngIf="apellido.invalid && (apellido.dirty || apellido.touched)" >
+                    <div class="" *ngIf="apellido?.errors.requiered" >
+                      Apellido es Requerido
+                    </div>
+                    <div class="" *ngIf="apellido?.errors.minlength" >
+                      Apellido debe contener minimo 3 caracteres
+                    </div>
+                    <div class="" *ngIf="apellido?.errors.maxlength" >
+                      Apellido debe contener maximo 20 caracteres
+                    </div>
+                </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="email" class="col-form-label col-sm-2">Email </label>
+        <div class="col-sm-6">
+          <input type="email"
+                style="text-transform:uppercase;"
+                class="form-control"
+                [(ngModel)]="cliente.email"
+                name="email"
+                  #email="ngModel"
+                  requiered>
+                  <div class="alert alert-danger pt-2" *ngIf="email.invalid && (email.dirty || email.touched)" >
+                    <div class="" *ngIf="email?.errors.requiered" >
+                      Email es Requerido
+                    </div>
+                    <div class="" *ngIf="email?.errors.email" >
+                     Formato de Email Invalido
+                    </div>
+                </div>
+        </div>
+      </div>
+       
+      <div class="form-group row">
+        <label for="telefono" class="col-form-label col-sm-2">Telefono Fijo </label>
+        <div class="col-sm-6">
+          <input type="number"
+                  class="form-control"
+                  [(ngModel)]="cliente.telefono"
+                  name="telefono"
+                  minlength="7"
+                  maxlength="7"
+                  #telefono="ngModel"
+                  >
+                  <div class="alert alert-danger pt-2" 
+                    *ngIf="telefono.invalid && (telefono.dirty || telefono.touched)" >
+                    <div class="" *ngIf="telefono?.errors.minlength" >
+                      Telefono debe contener minimo 7 caracteres
+                    </div>
+                    <div class="" *ngIf="telefono?.errors.maxlength" >
+                      Telefono debe contener maximo 7 caracteres
+                    </div>
+                </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="celular1" class="col-form-label col-sm-2">Celular 1 </label>
+        <div class="col-sm-6">
+          <input type="number"
+                  class="form-control"
+                  [(ngModel)]="cliente.celular1"
+                  name="celular1"
+                  minlength="10"
+                  maxlength="10"
+                  #celular1="ngModel"
+                  requiered>
+                  <div class="alert alert-danger pt-2"
+                      *ngIf="celular1.invalid && (celular1.dirty || celular1.touched)" >
+                    <div class="" *ngIf="celular1?.errors.requiered" >
+                      Celular 1 es Requerido
+                    </div>
+                    <div class="" *ngIf="celular1?.errors.minlength" >
+                      Celular 1 debe contener minimo 10 caracteres
+                    </div>
+                    <div class="" *ngIf="celular1?.errors.maxlength" >
+                      Celular 1 debe contener maximo 10 caracteres
+                    </div>
+                </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="celular2" class="col-form-label col-sm-2">Celular 2 </label>
+        <div class="col-sm-6">
+          <input type="number"
+                  class="form-control"
+                  [(ngModel)]="cliente.celular2"
+                  name="celular2"
+                  minlength="10"
+                  maxlength="10"
+                  #celular2="ngModel">
+                  <div class="alert alert-danger pt-2"
+                      *ngIf="celular2.invalid && (celular2.dirty || celular2.touched)" >
+                    <div class="" *ngIf="celular2?.errors.minlength" >
+                      Celular 2 debe contener minimo 10 caracteres
+                    </div>
+                    <div class="" *ngIf="celular2?.errors.maxlength" >
+                      Celular 2 debe contener maximo 10 caracteres
+                    </div>
+                </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="direccion" class="col-form-label col-sm-2">Direccion </label>
+        <div class="col-sm-6">
+          <input type="text"
+                  class="form-control"
+                  style="text-transform:uppercase;"
+                  [(ngModel)]="cliente.direccion"
+                  name="direccion"
+                  minlength="3"
+                  maxlength="50"
+                  #direccion="ngModel"
+                  requiered>
+                  <div class="alert alert-danger pt-2" 
+                  *ngIf="direccion.invalid && (direccion.dirty || direccion.touched)" >
+                    <div class="" *ngIf="direccion?.errors.requiered" >
+                      Direccion es Requerido
+                    </div>
+                    <div class="" *ngIf="direccion?.errors.minlength" >
+                      Direccion debe contener minimo 3 caracteres
+                    </div>
+                    <div class="" *ngIf="apellido?.errors.maxlength" >
+                      Direccion debe contener direccion 50 caracteres
+                    </div>
+                </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="region" class="col-form-label col-sm-2">Barrio</label>
+        <div class="col-sm-6">
+            <select  class="form-control"
+                      [compareWith]="compararRegion"
+                      [(ngModel)]="cliente.region" name="region"
+                      style="width: 500px;">
+                      <option
+                        [ngValue]="undefined">
+                        --- Selecionar Barrio ---
+                      </option>
+                      <option *ngFor="let region of regiones"
+                      [ngValue]="region">{{region.nombre | uppercase}}</option>
+            </select>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="fecha" class="col-form-label col-sm-2">Fec. Nacimiento </label>
+        <div class="col-sm-6">
+            <input [matDatepicker]="fecha" class="form-control"
+            [(ngModel)]="cliente.fecha" name="fecha"
+            style="display:inline; width: 300px;">
+             <mat-datepicker-toggle [for]="fecha"></mat-datepicker-toggle>
+            <mat-datepicker #fecha></mat-datepicker>
+        </div>
+      </div>
+      
+      <div class="form-group row">
+          <div class="col-sm-6">
+            <button class="btn btn-primary"
+                    role="button"
+                    (click)="create()"
+                    *ngIf="!cliente.id else elseBlock"
+                    [disabled]="!clienteForm.form.valid" >
+              Crear
+            </button>
+            <ng-template #elseBlock>
+                <button class="btn btn-primary"
+                    role="button"
+                    (click)="update()"
+                    [disabled]="!clienteForm.form.valid">
+              Actualizar
+            </button>
+            </ng-template>
+          </div>
+        </div>
+    </form>
+  </div>
+ </div>

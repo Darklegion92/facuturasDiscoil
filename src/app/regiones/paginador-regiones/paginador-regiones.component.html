@@ -1,0 +1,23 @@
+<ul *ngIf="paginas?.length>0" class="pagination " >
+  <li class="page-item bg-dark" *ngIf="paginador.number > 0" >
+      <a class="page-link bg-dark" [routerLink]="['/regiones/page', paginador.number-1]">&laquo;</a>
+
+  </li>
+  <li [ngClass]="paginador.first?'disabled page-item bg-dark': 'page-item bg-dark'" >
+      <a class="page-link bg-dark" [routerLink]="['/regiones/page', 0]">Primera</a>
+  </li>
+  <li class="page-item bg-dark" *ngFor="let pagina of paginas"
+  [ngClass]="pagina-1 === paginador.number? 'active': ''"  >
+    <span class="page-link text-muted bg-dark"
+    *ngIf="pagina-1 === paginador.number"
+     >{{pagina}}</span>
+    <a class="page-link bg-dark" *ngIf="pagina-1 !== paginador.number" [routerLink]="['/regiones/page', pagina-1]">{{pagina}}</a>
+  </li>
+  <li [ngClass]="paginador.last?'disabled page-item bg-dark': 'page-item bg-dark'" >
+      <a class="page-link bg-dark" [routerLink]="['/regiones/page', paginador.totalPages - 1]">Ultima</a>
+  </li>
+  <li class="page-item bg-dark" *ngIf="paginador.number < paginador.totalPages - 1" >
+      <a class="page-link bg-dark" [routerLink]="['/regiones/page', paginador.number+1]">&raquo;</a>
+
+    </li>
+</ul>

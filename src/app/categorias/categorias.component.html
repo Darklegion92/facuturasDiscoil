@@ -1,0 +1,67 @@
+<app-detalle-categoria
+      *ngIf="categoriaSelecionado"
+      [categoria]="categoriaSelecionado"></app-detalle-categoria>
+<div class="card bg-light mb-3">
+  <div class="card-header"><h3><strong>Categorias</strong></h3></div>
+  <div class="card-body">
+    <h4 class="card-title text-muted">Listado de Categorias</h4>
+    <div class="my-2 text-left">
+        <button *ngIf="authService.hasRole('ROLE_ADMIN')"
+                class="btn btn-rounded btn-outline-primary"
+                type="button"
+                 [routerLink]="['/categorias/form']"
+        >
+          Crear Categorias
+        </button>
+      </div>
+      <div class="alert alert-info"
+        *ngIf="categorias?.length == 0" >
+        <span class="text-muted"><strong>No hay registros en la Base de Datos</strong></span>
+    </div>
+    <table class='table table-bordered table-striped'
+                    *ngIf="categorias?.length>0" >
+      <thead class="bg-dark text-center text-white">
+        <tr>
+          <th>Detalles</th>
+          <th>Codigo</th>
+          <th>Nombre</th>
+          <th>Descripcion</th>
+          <th>Fecha</th>
+          <th *ngIf="authService.hasRole('ROLE_ADMIN')">Editar</th>
+          <th *ngIf="authService.hasRole('ROLE_ADMIN')">Eliminar</th>
+        </tr>
+      </thead>
+      <tbody class="text-center">
+        <tr *ngFor="let categoria of categorias" >
+          <td (click)="abrirModal(categoria)"
+             style="width: 64px; cursor: pointer;" >
+             {{categoria.id }}
+          </td>
+          <td>{{categoria.codigo }}</td>
+          <td>{{categoria.nombre | uppercase}}</td>
+            <td>{{categoria.descripcion}}</td>
+
+                    <td>{{categoria.createAt | date:'EEEE dd, MMMM yyyy'}}</td>
+                    <td *ngIf="authService.hasRole('ROLE_ADMIN')">
+                        <button type="button"
+                            class="btn btn-outline-success"
+                            [routerLink]="['/categorias/form', categoria.id]"
+                            >
+                          Editar
+                        </button>
+                      </td>
+                      <td *ngIf="authService.hasRole('ROLE_ADMIN')">
+                          <button type="button"
+                              class="btn btn-outline-danger"
+                              (click)="delete(categoria)"
+                              >
+                            Eliminar
+                          </button>
+                      </td>
+        </tr>
+      </tbody>
+    </table>
+    <app-paginador-categorias *ngIf="paginador"  [paginador]="paginador"></app-paginador-categorias>
+  </div>
+</div>
+
