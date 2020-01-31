@@ -41,7 +41,7 @@
       </button>
     </div>
 
-<div class="alert alert-info"
+<div class="alert alert-info my-3"
   *ngIf="facturas?.length == 0" >
   <span class="text-muted"><strong>No hay registros en la Base de Datos</strong></span>
 </div>
@@ -52,12 +52,14 @@
     <th>Detalles</th>
     <th>Descripcion</th>
     <th>Fecha</th>
+    <th>Total</th>
     <th *ngIf="authService.hasRole('ROLE_ADMIN')">Ganancia</th>
     <!-- <th *ngIf="authService.hasRole('ROLE_ADMIN')">Eliminar</th> -->
   </tr>
 </thead>
 <tbody class="text-center">
-  <tr *ngFor="let factura of facturas" >
+  <tr styl
+      *ngFor="let factura of facturas" >
     <td>
         <img  [routerLink]="['/facturas', factura.id]"
             src="http://localhost:8080/images/factura.jpg"
@@ -66,6 +68,7 @@
     </td>
     <td>{{factura.descripcion}}</td>
     <td>{{factura.createAt | date:'EEEE dd, MMMM yyyy'}}</td>
+    <td>{{formatNumber(factura.total)}}</td>
     <td *ngIf="authService.hasRole('ROLE_ADMIN')">
       {{formatNumber(factura.totalGanancia)}}</td>
   </tr>

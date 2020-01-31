@@ -8,6 +8,7 @@ import { Producto } from './../../producto';
 import { ProductoService } from './../../producto.service';
 import { ModalProductoService } from './../modal-producto.service';
 import { FuncionesService } from './../../../generales/funciones.service';
+import { AuthService } from './../../../users/auth.service';
 
 @Component({
   selector: 'app-producto-buscar',
@@ -25,6 +26,7 @@ export class ProductoBuscarComponent implements OnInit {
   constructor(
     public modalProductoBuscarService: ModalProductoBuscarService,
     public modalProductoService: ModalProductoService,
+    public authService: AuthService,
     public productoService: ProductoService,
     private funcionesService: FuncionesService,
   ) { }

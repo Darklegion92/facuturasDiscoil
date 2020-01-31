@@ -8,85 +8,89 @@
   </div>
   <div class="card-body">
     <h4 class="card-title">
-      <a [routerLink]="['/clientes']" class="btn btn-rounded btn-outline-warning btn-xs ">&laquo; volver</a>
+      <a [routerLink]="['/clientes']"
+          class="btn btn-rounded btn-outline-warning btn-xs ">
+          &laquo; volver
+      </a>
     </h4>
 
     <form #facturaForm="ngForm">
-      <div class="form-group row" *ngIf="factura.cliente">
-        <label for="cliente" class="col-sm-2 col-form-label">
-          <strong>
-            Cliente:
-          </strong>
-        </label>
-        <div class="col-sm-6">
-          <input type="text" name="cliente"
-            value="{{factura.cliente.nombre}} {{factura.cliente.apellido}}"
-            class="form-control" disabled>
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="descripcion" class="col-sm-2 col-form-label">
-          <strong>
-            Descripción:
-          </strong>
-         </label>
-        <div class="col-sm-6">
-          <input type="text" name="descripcion" [(ngModel)]="factura.descripcion"
-                  class="form-control" required #descripcion="ngModel">
-          <div class="alert alert-danger"
-              *ngIf="descripcion.invalid && descripcion.touched || descripcion.invalid && facturaForm.submitted">
-            La descripción es requerida.
+      <mat-card>
+        <mat-card-content>
+          <div class="form-group row" *ngIf="factura.cliente">
+            <label for="cliente" class="col-sm-2 col-form-label">
+              <strong>
+                Cliente:
+              </strong>
+            </label>
+            <div class="col-sm-6">
+              <input type="text" name="cliente"
+                value="{{factura.cliente.nombre}} {{factura.cliente.apellido}}"
+                class="form-control" disabled>
+            </div>
           </div>
-        </div>
-      </div>
+          <div class="form-group row">
+            <label for="descripcion" class="col-sm-2 col-form-label">
+              <strong>
+                Descripción:
+              </strong>
+             </label>
+            <div class="col-sm-6">
+              <input type="text" name="descripcion" [(ngModel)]="factura.descripcion"
+                      class="form-control" required #descripcion="ngModel">
+              <div class="alert alert-danger"
+                  *ngIf="descripcion.invalid && descripcion.touched
+                        || descripcion.invalid && facturaForm.submitted">
+                La descripción es requerida.
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="observacion" class="col-sm-2 col-form-label">
+              <strong>
+                Observación:
+              </strong>
+            </label>
+            <div class="col-sm-6">
+              <textarea name="observacion"
+              [(ngModel)]="factura.observacion" class="form-control"></textarea>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
 
-      <div class="form-group row">
-        <label for="observacion" class="col-sm-2 col-form-label">
-          <strong>
-            Observación:
-          </strong>
-        </label>
-        <div class="col-sm-6">
-          <textarea name="observacion"
-          [(ngModel)]="factura.observacion" class="form-control"></textarea>
-        </div>
-      </div>
+      <mat-card style="margin-top: 20px;">
+        <mat-card-content>
       <div style="min-width: 150px;
                   max-width: 750px;
+                  margin-top: 20px;
                   width: 100%;"
           class="form-group row ">
         <div class="col-sm-12">
               <mat-form-field style="width: 100%; ">
-                <input type="text" placeholder="Añadir producto"
-                        aria-label="Productos" matInput [formControl]="autocompleteControl"
+                <input type="text" placeholder="Digite el nombre del producto para Agregar"
+                        aria-label="Productos"
+                        matInput [formControl]="autocompleteControl"
                         [matAutocomplete]="auto">
-                <mat-autocomplete #auto="matAutocomplete" [displayWith]="mostrarNombre"
+                <mat-autocomplete #auto="matAutocomplete"
+                                  [displayWith]="mostrarNombre"
                                   (optionSelected)="seleccionarProducto($event)">
                   <mat-option *ngFor="let producto of productosFiltrados | async"
                               [value]="producto">
                     <span *ngIf="producto.cantidad<=0">
-                          <span class=" text-danger mr-1 "
+                          <span class=" alert-danger mr-1 "
                                 style="font-size: 1rem;">
-                                 - - No hay Stock disponible - -
-                          </span>
-                          <span class="text-danger"
-                                style="font-size: 1rem;">
-                                {{producto.nombre | uppercase}}
-                          </span>
-                          <span class=""
-                                style="font-size: 0.8rem;">
-                               - - {{producto.precio }} - -
+                                 * * NO HAY STOCK DISPONIBLE * *
+                                 {{producto.nombre | uppercase}}
+                                 * * {{formatNumber(producto.precio) }} * *
                           </span>
                     </span>
-                    <span class=""
-                          style="font-size: 0.8rem;"
+                    <span
+                          style="font-size: 1rem;"
                           *ngIf="producto.cantidad>0">
-                      {{producto.nombre | uppercase}}
+                      {{producto.nombre | uppercase}}  * * {{formatNumber(producto.precio)}} * *
                     </span>
-                    <span class=""
-                                style="font-size: 0.8rem;">
-                               - - {{producto.precio }} - -
-                    </span>
+
                   </mat-option>
                 </mat-autocomplete>
               </mat-form-field>
@@ -98,13 +102,15 @@
       <div class="alert alert-info my-4" *ngIf="factura.items.length == 0">
         No hay líneas asignadas para la factura. Debe agregar al menos una!
       </div>
-      <table class="table table-striped table-hover table-sm" *ngIf="factura.items.length > 0">
+      <table style="font-size: 1rem;"
+            class="table table-striped table-hover table-sm table-bordered" 
+            *ngIf="factura.items.length > 0">
         <thead class="bg-dark text-center text-white">
           <tr>
             <th>Producto</th>
             <th>Precio</th>
-            <th style="max-width: 100px;">Cantidad</th>
             <th>Stock</th>
+            <th style="max-width: 50px;" >Cantidad</th>
             <th>Sub-Total</th>
             <th>Eliminar</th>
           </tr>
@@ -113,14 +119,6 @@
           <tr *ngFor="let item of factura.items">
             <td class="text-left">{{item.producto.nombre | uppercase}}</td>
             <td class="text-right">{{formatNumber(item.producto.precio)}}</td>
-            <td  class="text-center"
-                >
-              <input type="number"
-                style="max-width: 50px; margin-left: 40px; padding: 0;"
-                [(ngModel)]="item.cantidad" [ngModelOptions]="{standalone: true}"
-                class="form-control"
-                (change)="actualizarCantidad(item.producto.id, $event)">
-            </td>
             <td style="max-width: 80px; padding-top: 8px;"
                 *ngIf="item.producto.cantidad>3">
                 {{item.producto.cantidad}}
@@ -130,6 +128,13 @@
                 *ngIf="item.producto.cantidad<=3">
                 {{item.producto.cantidad}}
             </td>
+            <td  class="text-center ">
+              <input type="number"
+                style="max-width: 60px; margin-left: 10px; padding: 0;"
+                [(ngModel)]="item.cantidad" [ngModelOptions]="{standalone: true}"
+                class="form-control "
+                (change)="actualizarCantidad(item.producto.id, $event)">
+            </td>
             <td class="text-right">{{formatNumber(item.calcularImporte())}}</td>
             <td>
               <button class="btn btn-danger btn-sm" type="button"
@@ -137,7 +142,9 @@
           </tr>
         </tbody>
       </table>
-      <mat-card>
+    </mat-card-content>
+  </mat-card>
+      <mat-card style="margin-top: 20px;">
         <mat-card-content>
       <h5 class="float-left mx-2" *ngIf="factura.items.length > 0 && authService.hasRole('ROLE_ADMIN')">
         <strong>Descuento</strong>:

@@ -27,7 +27,6 @@ import { PaginadorClientesComponent } from './clientes/paginador-clientes/pagina
 import { PaginadorProductosComponent } from './productos/paginador-productos/paginador-productos.component';
 import { PaginadorUsersComponent } from './users/paginador-users/paginador-users.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatDatepickerModule, MatNativeDateModule } from '@angular/material';
 import { DetalleUserComponent } from './users/detalle-user/detalle-user.component';
 import { DetalleProductoComponent } from './productos/detalle-producto/detalle-producto.component';
 import { DetalleClienteComponent } from './clientes/detalle-cliente/detalle-cliente.component';
@@ -51,8 +50,11 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatCardModule } from '@angular/material/card';
-
+import { MatIconModule} from '@angular/material/icon';
+import { MatDatepickerModule, MatNativeDateModule } from '@angular/material';
+import { MatSelectModule} from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
+
 import { ListaFacturasComponent } from './facturas/lista-facturas/lista-facturas.component';
 import { PaginadorFacturasComponent } from './facturas/paginador-facturas/paginador-facturas.component';
 import { ClienteFacturarComponent } from './facturas/cliente-facturar/cliente-facturar.component';
@@ -163,9 +165,11 @@ const routes: Routes = [
     BrowserAnimationsModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatSelectModule,
     ReactiveFormsModule,
     MatAutocompleteModule,
     MatInputModule,
+    MatIconModule,
     MatFormFieldModule,
     MatCheckboxModule,
     MatCardModule

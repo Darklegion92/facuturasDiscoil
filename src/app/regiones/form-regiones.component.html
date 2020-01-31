@@ -5,7 +5,11 @@
 </ul>
 <div class="card bg-dark text-white">
 <div class="card-header">
-  {{titulo}}
+  <h4 class="card-title">
+    <strong>
+      {{titulo}}:
+    </strong>
+  </h4>
 </div>
 <div class="card-body">
   <form #regionForm="ngForm" >
@@ -15,10 +19,11 @@
         <input type="text" class="form-control "
                 [(ngModel)]="region.nombre"
                 style="text-transform:uppercase;"
+                placeholder="Dije Nombre del Barrio, Vereda y/o Corregimiento"
                 id="nombre"
                 name="nombre"
                 minlength="3"
-                maxlength="15"
+                maxlength="20"
                 #nombre="ngModel"
                 ng-model="nombre"
                 requiered>
@@ -53,7 +58,6 @@
             Actualizar
           </button>
           </ng-template>
-
         </div>
       </div>
   </form>

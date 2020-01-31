@@ -14,6 +14,8 @@ import Swal from 'sweetalert2';
 })
 export class FormUserComponent implements OnInit {
 
+  minDate = new Date(1930, 1, 1);
+  maxDate = new Date();
   user: User = new User();
   regiones: Region[];
   // roles: string;

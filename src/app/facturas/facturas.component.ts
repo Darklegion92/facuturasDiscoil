@@ -80,6 +80,7 @@ export class FacturasComponent implements OnInit {
         // guarda en el localStore
       }
     }
+
     this.autocompleteControl.setValue('');
     event.option.focus();
     event.option.deselect();

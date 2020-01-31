@@ -5,64 +5,28 @@
 </ul>
 <div class="card bg-dark text-white">
     <div class="card-header">
-      {{titulo}}
+      <h4 class="card-title">
+        <strong>
+          {{titulo}}:
+        </strong>
+      </h4>
     </div>
     <div class="card-body">
       <form #productoForm="ngForm">
-         <!--  <div class="form-group row">
-              <label for="region" class="col-form-label col-sm-2">Categoria</label>
-              <div class="col-sm-6">
-                  <select  class="form-control"
-                            [compareWith]="compararCategoria"
-                            [(ngModel)]="producto.categoria" name="region"
-                            style="width: 500px;">
-                            <option
-                              [ngValue]="undefined">
-                              --- Selecionar Categoria ---
-                            </option>
-                            <option *ngFor="let categoria of categorias"
-                            [ngValue]="categoria">{{categoria.nombre}}</option>
-                  </select>
-              </div>
-            </div>
-           <div class="form-group row">
-              <label for="codigo" class="col-form-label col-sm-2">Codigo </label>
-              <div class="col-sm-6">
-                <input type="number" class="form-control"
-                        [(ngModel)]="producto.codigo"
-                        name="codigo"
-                        minlength="4"
-                    maxlength="4"
-                    #codigo="ngModel"
-                    requiered>
-                    <div *ngIf="codigo.invalid && (codigo.dirty || codigo.touched)"
-                    class="alert alert-danger">
-                        <div class="" *ngIf="codigo?.errors?.required" >
-                          Codigo es Requerido
-                        </div>
-                        <div class="" *ngIf="codigo?.errors?.minlength" >
-                          Codigo debe contener minimo 4 caracteres
-                        </div>
-                        <div class="" *ngIf="codigo?.errors?.maxlength" >
-                          Codigo debe contener maximo 4 caracteres
-                        </div>
-                    </div>
-              </div>
-            </div> -->
-
         <div class="form-group row">
           <label for="nombre" class="col-form-label col-sm-2">Nombre </label>
           <div class="col-sm-6">
             <input type="text" class="form-control"
                     style="text-transform:uppercase;"
                     [(ngModel)]="producto.nombre"
+                    placeholder="Digite un nombre para el Producto"
                     name="nombre"
                     minlength="3"
                 maxlength="50"
                 #nombre="ngModel"
                 requiered>
                 <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)"
-                class="alert alert-danger">
+                      class="alert alert-danger">
                     <div class="" *ngIf="nombre?.errors?.required" >
                       Nombre es Requerido
                     </div>
@@ -79,6 +43,8 @@
           <label for="descripcion" class="col-form-label col-sm-2">Descripcion </label>
           <div class="col-sm-6">
             <textarea class="form-control"
+                      style="text-transform:uppercase;"
+                      placeholder="Digite cualquier dato que considere importante"
                       [(ngModel)]="producto.descripcion"
                       name="descripcion"
                       >
@@ -89,18 +55,22 @@
             <label for="precioCompra" class="col-form-label col-sm-2">Precio Compra:  $ </label>
             <div class="col-sm-6">
               <input type="number"
-                  class="form-control"
+                    class="form-control"
                     [(ngModel)]="producto.precioCompra"
                     name="precioCompra"
-                    minlength="1"
+                    placeholder="Solo Numeros, No digite 'puntos' ( . ) ni 'comas'( , )"
+                    minlength="3"
                     #precioCompra="ngModel"
                     requiered>
-                   <div class="alert alert-danger pt-2" *ngIf="precioCompra.invalid " >
-                      <div class="" *ngIf="!!precioCompra?.errors.requiered" >
-                        Precio Compra es Requerido
-                      </div>
-
-                  </div>
+                    <div *ngIf="precioCompra.invalid && (precioCompra.dirty || precioCompra.touched)"
+                          class="alert alert-danger">
+                        <div class="" *ngIf="precioCompra?.errors?.required" >
+                          Precio Compra Es Requerido
+                        </div>
+                        <div class="" *ngIf="precioCompra?.errors?.minlength" >
+                          Precio Compra debe contener minimo 3 digitos
+                        </div>
+                    </div>
             </div>
           </div>
           <div class="form-group row">
@@ -110,14 +80,20 @@
                     class="form-control"
                       [(ngModel)]="producto.precio"
                       name="precio"
-                      minlength="1"
+                      placeholder="Solo Numeros, No digite 'puntos' ( . ) ni 'comas'( , )"
+                      minlength="3"
                       #precio="ngModel"
                       requiered>
                       <div class="alert alert-danger pt-2" *ngIf="precio.invalid" >
                         <div class="" *ngIf="precio?.errors.requiered" >
-                          Precio es Requerido
+                          Precio Venta es Requerido
                         </div>
-
+                        <div class="" *ngIf="precio?.errors?.required" >
+                          Precio Venta Es Requerido
+                        </div>
+                        <div class="" *ngIf="precio?.errors?.minlength" >
+                          Precio Compra debe contener minimo 3 digitos
+                        </div>
                     </div>
               </div>
             </div>
@@ -128,14 +104,17 @@
                       class="form-control"
                         [(ngModel)]="producto.cantidad"
                         name="cantidad"
+                        placeholder="Solo Numeros, No digite 'puntos' ( . ) ni 'comas'( , )"
                         minlength="1"
                         #cantidad="ngModel"
                         requiered>
                         <div class="alert alert-danger pt-2" *ngIf="cantidad.invalid " >
                           <div class="" *ngIf="cantidad?.errors.requiered" >
-                            Cantidad
+                            Cantidad es Requerida
                           </div>
-
+                          <div class="" *ngIf="cantidad?.errors?.minlength" >
+                            Precio Compra debe contener minimo 1 digitos diferente de 0
+                          </div>
                       </div>
                 </div>
               </div>

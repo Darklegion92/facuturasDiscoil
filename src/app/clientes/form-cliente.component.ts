@@ -4,23 +4,40 @@ import { ClienteService } from './cliente.service';
 import { Region } from '../regiones/region';
 import { RegionService } from '../regiones/region.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
+import {ErrorStateMatcher} from '@angular/material/core';
 import Swal from 'sweetalert2';
+
+
+/** Error when invalid control is dirty, touched, or submitted. */
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
+}
 
 @Component({
   selector: 'app-form-cliente',
   templateUrl: './form-cliente.component.html'
 })
+
+
 export class FormClienteComponent implements OnInit {
 
+  constructor(
+              private clienteService: ClienteService,
+              private regionService: RegionService,
+              private router: Router,
+              private activatedRoute: ActivatedRoute
+              ) { }
+
+  minDate = new Date(1930, 1, 1);
+  maxDate = new Date();
   cliente: Cliente = new Cliente();
   regiones: Region[];
   titulo = 'Crear Cliente';
   errores: string[];
-  constructor(
-    private clienteService: ClienteService,
-    private regionService: RegionService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.cargarCliente();
@@ -67,6 +84,7 @@ export class FormClienteComponent implements OnInit {
       },
       err => {
         this.errores = err.error.errors as string[];
+        console.log(err);
       }
     );
   }
