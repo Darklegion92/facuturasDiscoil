@@ -3,11 +3,11 @@ import { Observable } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material';
 import { map, flatMap } from 'rxjs/operators';
-import { ModalServicioBuscarService } from './modal-servicio-buscar.service';
-import { Servicio } from './../../servicio';
-import { ServicioService } from './../../servicio.service';
-import { ModalServicioService } from './../modal-servicio.service';
-import { FuncionesService } from './../../../generales/funciones.service';
+import { ModalServicioBuscarService } from '../../services/modal-servicio-buscar.service';
+import { Servicio } from '../../interfaces/servicio';
+import { ServicioService } from '../../services/servicio.service';
+import { ModalServicioService } from '../../services/modal-servicio.service';
+import { FuncionesService } from '../../../generales/services/funciones.service';
 
 @Component({
   selector: 'app-servicio-buscar',

@@ -4,7 +4,7 @@ import {
 } from '@angular/common/http';
 
 import { Observable, throwError } from 'rxjs';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../services/auth.service';
 import Swal from 'sweetalert2';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';

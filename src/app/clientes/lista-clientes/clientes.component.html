@@ -1,0 +1,96 @@
+<app-loading *ngIf="loadingService.modal"></app-loading>
+<div class="card bg-light mb-3">
+  <div class="card-header"><h3><strong>Usuarios</strong></h3></div>
+  <div class="card-body">
+    <h4 class="card-title text-muted">Listado de Usuarios</h4>
+    <div class="row">
+      <div class="col-sm-2">
+        <div class="my-2 text-left">
+          <button *ngIf="authService.hasRole('ROLE_ADMIN')"
+            class="btn btn-rounded btn-outline-primary btn-xs"
+          type="button"
+          (click)="abrirModal()"
+          >
+            Buscar Usuario
+          </button>
+        </div>
+      </div>
+      <div class="col-sm-10">
+        <div class="my-2 text-left">
+          <button *ngIf="authService.hasRole('ROLE_ADMIN')"
+                  class="btn btn-rounded btn-outline-info btn-xs"
+                  type="button"
+                   [routerLink]="['/clientes/form']"
+          >
+            Crear Usuario
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="alert alert-info"
+        *ngIf="usuarios?.length == 0" >
+        <span class="text-muted"><strong>No hay registros en la Base de Datos</strong></span>
+    </div>
+    <table class='table table-bordered table-striped'
+                  *ngIf="usuarios?.length>0" >
+      <thead class="bg-dark text-center text-white">
+        <tr>
+          <th>Detalle</th> 
+          <th>Documento</th>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Estado</th>
+          <th>Rol</th>
+          <th>Editar</th>
+          <!-- <th *ngIf="authService.hasRole('ROLE_ADMIN')">Eliminar</th> -->
+        </tr>
+      </thead>
+      <tbody class="text-center">
+        <tr *ngFor="let usuario of usuarios" >
+            <td class="text-center"><button class="btn btn-primary btn-sm" type="button"
+                [routerLink]="['/clientes/detalle', usuario._id]">ver</button>
+              </td>
+            <td>{{usuario.documento}}</td>
+              <td>{{usuario.nombre | uppercase}}</td>
+                <td>{{usuario.apellido | uppercase}}</td>
+                <td>{{usuario.estado }}</td>
+                <td *ngIf="usuario.roles.length === 2">
+                  ADMINISTRADOR
+                </td>
+                <td *ngIf="usuario.roles.length === 1">
+                  Usuario
+                </td>
+                  <!-- <td>
+                    <button type="button"
+                            class="btn btn-rounded btn-outline-success btn-xs"
+                            [routerLink]="['clientes/detalle', usuario._id]"
+                            >
+                    Crear Factura
+                  </button>
+                  </td> -->
+                  <td>
+                    <button type="button"
+                        class="btn btn-rounded btn-outline-secondary btn-xs"
+                        [routerLink]="['/clientes/form', usuario._id]"
+                        >
+                      Editar
+                    </button>
+                  </td>
+                  <!-- <td *ngIf="authService.hasRole('ROLE_ADMIN')">
+                      <button type="button"
+                          class="btn btn-outline-danger"
+                          (click)="delete(cliente)"
+                          >
+                        Eliminar
+                      </button>
+                  </td> -->
+                    <!-- <th>{{cliente.createAt}}</th> -->
+        </tr>
+      </tbody>
+    </table>
+    <!-- <app-paginador *ngIf="paginador"
+    [paginador]="paginador"
+    [link]="link">
+    </app-paginador> -->
+  </div>
+</div>

@@ -1,20 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { MatAutocompleteSelectedEvent } from '@angular/material';
 import { Observable } from 'rxjs';
-import { map, startWith, flatMap } from 'rxjs/operators';
-
+import { map,  flatMap } from 'rxjs/operators';
 import { ModalFacturaService } from './../services/modalFactura.service';
 import { FormControl } from '@angular/forms';
-import Swal from 'sweetalert2';
-import { Cliente } from './../../clientes/cliente';
-
-import { ClienteService } from './../../clientes/cliente.service';
+import { Cliente } from '../../clientes/interfaces/cliente';
+import { ClienteService } from '../../clientes/services/cliente.service';
 
 @Component({
   selector: 'app-cliente-facturar',
   templateUrl: './cliente-facturar.component.html',
-  styleUrls: ['./cliente-facturar.component.css']
+  styleUrls: ['../../generales/css/modal.css']
 })
+
 export class ClienteFacturarComponent implements OnInit {
   id: number;
   cliente: Cliente;
@@ -24,7 +22,7 @@ export class ClienteFacturarComponent implements OnInit {
 
   constructor(
     public modalFacturaService: ModalFacturaService,
-    private clienteService: ClienteService
+    private clienteService: ClienteService,
   ) { }
 
   ngOnInit() {

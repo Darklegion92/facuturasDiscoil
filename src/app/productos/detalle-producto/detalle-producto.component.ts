@@ -1,27 +1,26 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Producto } from '../producto';
-import { ProductoService  } from '../producto.service';
-import { ModalProductoService  } from './modal-producto.service';
+import { Component, Input } from '@angular/core';
+import { Producto } from '../interfaces/producto';
+import { ProductoService  } from '../services/producto.service';
+import { ModalProductoService  } from '../services/modal-producto.service';
 import Swal from 'sweetalert2';
 import { HttpEventType } from '@angular/common/http';
-import { AuthService } from './../../users/auth.service';
-import { ModalProductoBuscarService } from './producto-buscar/modal-producto-buscar.service';
-import { FuncionesService } from './../../generales/funciones.service';
+import { AuthService } from '../../users/services/auth.service';
+import { ModalProductoBuscarService } from '../producto-buscar/modal-producto-buscar.service';
+import { FuncionesService } from '../../generales/services/funciones.service';
 
 
 @Component({
   selector: 'app-detalle-producto',
   templateUrl: './detalle-producto.component.html',
-  styleUrls: ['./detalle-producto.component.css']
+  styleUrls: ['../../generales/css/modal.css']
 })
-export class DetalleProductoComponent implements OnInit {
+export class DetalleProductoComponent  {
 
   @Input() producto: Producto;
   titulo = 'Detalle Producto';
-  precioCompraF: string;
-  precioVentaF: string;
   public fotoSelecionada: File;
   progreso = 0;
+  rutaFoto = 'Selecionar Foto';
 
   constructor(
     private productoService: ProductoService,
@@ -31,28 +30,33 @@ export class DetalleProductoComponent implements OnInit {
     public authService: AuthService
    ) { }
 
-  ngOnInit() {
-  }
+
   seleccionarFoto(event) {
     this.fotoSelecionada = event.target.files[0];
     this.progreso = 0;
     if (this.fotoSelecionada.type.indexOf('image') < 0) {
-      Swal.fire(
-        'Error al Subir Selecionar Imagen',
-        'El archivo debe ser del tipo "Imagen"',
-        'error'
-      );
+      Swal.fire({
+        type: 'error',
+        title: 'Error al Subir Selecionar Imagen',
+        text: `El archivo debe ser del tipo 'Imagen'`,
+        footer: 'Intente de nuevo',
+        });
       this.fotoSelecionada = null;
+    } else {
+      this.rutaFoto = this.fotoSelecionada.name;
     }
   }
-  subirFoto() {
-    if (!this.fotoSelecionada) {
-      Swal.fire(
-        'Error al Subir Imagen',
-        'No ha selecionado una imagen',
-        'error'
-      );
 
+  subirFoto() {
+    console.log('ingreso a subir foto');
+    if (!this.fotoSelecionada) {
+      this.rutaFoto = 'Selecionar Foto';
+      Swal.fire({
+        type: 'error',
+        title: 'Error al Subir Imagen',
+        text: `No ha selecionado una imagen`,
+        footer: 'Intente de nuevo',
+        });
     } else {
     this.productoService.subirFoto(this.fotoSelecionada, this.producto.id)
     .subscribe( event => {
@@ -62,11 +66,16 @@ export class DetalleProductoComponent implements OnInit {
           const response: any = event.body;
           this.producto = response.producto as Producto;
           this.modalProductoService.notificarUpload.emit(this.producto);
-          Swal.fire(
-            'La Foto se ha subido con Exito!',
-            response.mensaje,
-            'success'
-          );
+          this.rutaFoto = 'Selecionar Foto';
+          this.fotoSelecionada = null;
+          Swal.fire({
+            type: 'success',
+            title: 'La Foto se ha subido con Exito!',
+            text: response.mensaje,
+            footer: '',
+            });
+          // pendiente meter un time out
+          this.progreso = 0;
       }
     });
   }
@@ -77,6 +86,10 @@ export class DetalleProductoComponent implements OnInit {
     this.progreso = 0;
     this.modalProductoBuscarService.cerrarModal();
     this.producto = null;
+  }
+  calcularInversion(cantidad: number, precioCompra: number): string {
+    const inversion = cantidad * precioCompra;
+    return this.formatNumber(inversion);
   }
 
   formatNumber(cantidad: number): string {

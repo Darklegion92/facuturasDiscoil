@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { AuthService } from '../users/auth.service';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../users/services/auth.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
@@ -7,18 +7,26 @@ import Swal from 'sweetalert2';
   selector: 'app-header',
   templateUrl: './header.component.html',
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit{
+ estado: boolean;
+  constructor(
+    public authService: AuthService, private router: Router
+    ) { }
 
-
-  constructor(public authService: AuthService, private router: Router) { }
+    ngOnInit() {
+      if (sessionStorage.getItem('usuario') != null) {
+        this.estado = true;
+      }
+    }
   logout(): void {
     const username = this.authService.usuario.username;
     this.authService.logout();
-    Swal.fire(
-      '¡Informacion!',
-       `Hasta pronto ${username}, has cerrado sesión con éxito!`,
-      'info'
-    );
+    Swal.fire({
+      type: 'info',
+      title: '¡Informacion!',
+      text: `Hasta pronto ${username}`,
+      footer: 'Has cerrado sesión con éxito!',
+      });
     this.router.navigate(['/login']);
   }
 }

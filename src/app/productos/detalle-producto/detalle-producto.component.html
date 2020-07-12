@@ -3,7 +3,7 @@
     class="modal" tabindex="-1" role="dialog">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header bg-dark text-white-50">
           <h4 class="modal-title">
             <strong>
               {{titulo}}
@@ -11,7 +11,7 @@
           </h4>
         <button (click)="cerrarModal()"
           type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+          <span class="text-white" aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
@@ -31,7 +31,8 @@
                 <li *ngIf="authService.hasRole('ROLE_ADMIN')"
                     class="list-group-item">
                     <strong>Precio Compra: </strong>
-                    {{formatNumber(producto.precioCompra)}}</li>
+                    {{formatNumber(producto.precioCompra)}}
+                </li>
                 <li class="list-group-item">
                     <strong>Precio Venta: </strong>
                   {{formatNumber(producto.precio)}}
@@ -46,11 +47,15 @@
                     <strong>Cantidad: </strong>
                     {{producto.cantidad}}
                 </li>
+                <li *ngIf="(producto.cantidad >0) && authService.hasRole('ROLE_ADMIN')"
+                    class="list-group-item">
+                    <strong>Total Inversion: </strong>
+                    {{calcularInversion(producto.cantidad, producto.precioCompra)}}
+                </li>
                 <li class="list-group-item">
                     <strong>Ult. Movimiento: </strong>
                   {{producto.createAt | date:"fullDate"}}
                 </li>
-
               </ul>
                 <div class="input-group mb-1">
                     <div class="custom-file">
@@ -60,11 +65,11 @@
                             id="inputGroupFile04" aria-describedby="inputGroupFileAddon04">
                       <label style="cursor: pointer;"
                              class="custom-file-label"
-                             for="inputGroupFile04">Selecionar Foto</label>
+                             for="inputGroupFile04">{{rutaFoto}}</label>
                     </div>
                     <div class="input-group-append">
                       <button (click)="subirFoto()"
-                        style="cursor: pointer;"
+
                         [disabled]="!fotoSelecionada"
                         class="btn btn-outline-secondary"
                         type="button" id="inputGroupFileAddon04">Subir</button>
@@ -89,20 +94,19 @@
           </div>
         </div>
       </div>
-      <div class="modal-footer mt-0">
+      <div class="modal-footer mt-0 bg-dark">
         <button *ngIf="authService.hasRole('ROLE_ADMIN')"
                         type="button"
                         class="btn btn-rounded btn-outline-secondary btn-xs mx-2"
                         [routerLink]="['/productos/form', producto.id]"
-
                   >
                     Editar
         </button>
         <button (click)="cerrarModal()"
-          type="button" class="btn btn-rounded btn-outline-dark btn-xs" data-dismiss="modal">
+          type="button" class="btn btn-rounded btn-outline-light btn-xs"
+                data-dismiss="modal">
           Cerrar
         </button>
-
       </div>
     </div>
   </div>

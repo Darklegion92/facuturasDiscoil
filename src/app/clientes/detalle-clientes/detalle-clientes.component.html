@@ -1,0 +1,166 @@
+<app-loading *ngIf="loadingService.modal"></app-loading>
+<div class="container"  *ngIf="user">
+    <a [routerLink]="['/users']"
+              class="btn btn-outline-warning btn-xs my-2">&laquo;
+              Regresar
+    </a>
+    <!-- <button
+            type="button"
+            class="btn btn-outline-secondary btn-xs my-2 mx-3"
+            [routerLink]="['/users/form', user.id]"
+    >
+      Editar
+    </button> -->
+    <button type="button"
+              class="btn btn-outline-success btn-xs"
+              [routerLink]="['/facturas/form']"
+              >
+              Crear Facturas
+      </button>
+  <div class="row">
+    <div class="col-sm">
+      <ul *ngIf="user"  class="list-group text-dark mb-3">
+        <li class="list-group-item bg-dark text-white-50">
+          <h4>
+            <strong>
+              Detalles user.
+            </strong>
+          </h4>
+        </li>
+        <li *ngIf="user.nombre"
+          class="list-group-item">
+          <strong>Nombre: </strong>
+          {{user.nombre | uppercase}}
+        </li>
+        <li *ngIf="user.apellido"
+          class="list-group-item">
+          <strong>Apellido: </strong>
+          {{user.apellido | uppercase}}
+        </li>
+        <!-- <li  *ngIf="user.region.nombre"
+          class="list-group-item">
+          <strong>Barrio: </strong>
+          {{user.region.nombre | uppercase}}
+        </li> -->
+        <li *ngIf="user.direccion"
+          class="list-group-item">
+          <strong>Direccion: </strong>
+          {{user.direccion | uppercase}}
+        </li>
+        <li *ngIf="user.celular1"
+        class="list-group-item">
+        <strong>Celular 1: </strong>
+        {{user.celular1}}
+        </li>
+        <li *ngIf="user.celular2"
+        class="list-group-item">
+        <strong>Celular 2: </strong>
+        {{user.celular2}}
+        </li>
+        <li *ngIf="user.telefono"
+          class="list-group-item">
+          <strong>Telefono: </strong>
+          {{user.telefono}}
+        </li>
+        <li *ngIf="user.email"
+          class="list-group-item">
+          <strong>Email: </strong>
+          {{user.email | uppercase}}
+        </li>
+        <li *ngIf="user.fecha"
+          class="list-group-item">
+          <strong>Fec. Nacimiento: </strong>
+          {{user.fecha | date:"fullDate"}}
+        </li>
+        <li *ngIf="user.createAt"
+          class="list-group-item">
+          <strong>Fec. Creacion: </strong>
+          {{user.createAt | date:"fullDate"}}
+        </li>
+      </ul>
+        <!-- <div class="input-group mb-3">
+            <div class="custom-file">
+              <input (change)="seleccionarFoto($event)"
+                    type="file" class="custom-file-input"
+                    style="cursor: pointer;"
+                    id="inputGroupFile04" aria-describedby="inputGroupFileAddon04">
+              <label style="cursor: pointer;"
+                    class="custom-file-label"
+                    for="inputGroupFile04">{{rutaFoto}}</label>
+            </div>
+            <div class="input-group-append">
+              <button (click)="subirFoto()"
+                [disabled]="!fotoSelecionada"
+                class="btn btn-outline-secondary"
+                type="button" id="inputGroupFileAddon04">Subir</button>
+            </div>
+          </div>
+          <div *ngIf="progreso>0 "  class="progress my-2" style="height: 40px;">
+              <div class="progress-bar progress-bar-striped"
+                  role="progressbar"
+                  [ngStyle]= "{width: progreso+'%'}"
+                  attr.aria-valuenow="{{progreso}}" aria-valuemin="0"
+                  aria-valuemax="100">
+                  {{progreso}}%
+              </div>
+          </div> -->
+
+    </div>
+    <!-- <div class="col-sm">
+      <img *ngIf="user?.foto"  src="http://localhost:8080/api/uploads/imguser/{{user.foto}}"
+          alt="{{user.foto}}" class="img-thumbnail rounded">
+    </div> -->
+  </div>
+  <div class="row" >
+      <button type="button"
+              class="btn btn-outline-success btn-xs"
+              [routerLink]="['/facturas/form', user.id]"
+              >
+              Crear Factura
+      </button>
+    </div>
+    <div class="row">
+
+      <div class="alert alert-info my-4" *ngIf="user.facturas.length == 0">
+        No hay Facturas asignadas para el user:
+        <strong> {{user.nombre}} {{user.apellido}} </strong>
+      </div>
+
+      <table class="table table-bordered text-center table-striped my-4"
+                    *ngIf="user.facturas.length > 0">
+        <thead class="bg-dark  text-white">
+          <tr>
+            <th >Detalle</th>
+            <th>Fecha</th>
+            <th>Estado</th>
+            <th >Cambiar</th>
+            <th >Total</th>
+            <!-- <th *ngIf="authService.hasRole('ROLE_ADMIN')">eliminar</th> -->
+          </tr>
+        </thead>
+          <tbody>
+            <tr *ngFor="let factura of user.facturas">
+              <td class="text-center"><button class="btn btn-primary btn-sm" type="button"
+                [routerLink]="['/facturas', factura._id]">ver</button>
+              </td>
+              <td>{{factura.createAt | date:"full"}}</td>
+              <td >{{factura.estado}}</td>
+              <td >
+                <form [formGroup]="estadoFormulario">
+                  <select id="estado" formControlName="estado" 
+                      (change)="cambiarEstadoFactura(factura)">
+                      <option *ngFor="let estado of estados" 
+                      [ngValue]="estado">{{ estado }}</option>
+                  </select>
+                </form>
+              </td>
+              <td class="text-right">{{formatNumber(factura.total)}}</td>
+            </tr>
+          </tbody>
+        <a [routerLink]="['/users']"
+            class="btn btn-outline-warning btn-xs my-3">
+            &laquo; Regresar</a>
+      </table>
+
+    </div>
+</div>
