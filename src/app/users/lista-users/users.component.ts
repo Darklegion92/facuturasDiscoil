@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from '../interfaces/user';
-import { UserService } from '../services/user.service';
+import { User } from '../../usuarios/interfaces/user';
+import { UserService } from '../../usuarios/services/user.service';
 import { tap } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { ActivatedRoute } from '@angular/router';
-import { ModalUserService  } from '../services/modal-user.service';
-import { AuthService } from '../services/auth.service';
+import { ModalUserService  } from '../../usuarios/services/modal-user.service';
+import { AuthService } from '../../usuarios/services/auth.service';
 import { LoadingService } from '../../generales/services/loading.service';
 
 @Component({
@@ -29,35 +29,6 @@ export class UsersComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-  //   this.loadingService.abrirModal();
-  //   this.activatedRoute.paramMap.subscribe( params => {
-  //     let page: number = +params.get('page');
-  //     if (!page) {
-  //         page = 0;
-  //     }
-  //     this.userService.getUsers(page)
-  //   .pipe(
-  //     tap( response => {
-  //       // console.log('UsersComponent: tap 3');
-  //       (response.content as User[]).forEach(user => {
-  //         this.loadingService.cerrarModal();
-  //       //  console.log(user.roles.length);
-  //       });
-  //     })
-  //   ).subscribe(response => {
-  //     this.users = response.content as User[];
-  //     this.paginador = response;
-  //   });
-  // });
-
-  //   this.modalUserService.notificarUpload.subscribe(user => {
-  //     this.users = this.users.map( userOriginal => {
-  //       if (user.id === userOriginal.id) {
-  //         userOriginal.foto = user.foto;
-  //       }
-  //       return userOriginal;
-  //     });
-  //   });
   }
 
   delete(user: User): void {

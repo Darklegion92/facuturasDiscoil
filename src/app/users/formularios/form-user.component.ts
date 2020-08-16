@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from '../interfaces/user';
-import { UserService } from '../services/user.service';
-import { Region } from '../../regiones/interfaces/region';
-import { RegionService } from '../../regiones/services/region.service';
+import { User } from '../../usuarios/interfaces/user';
+import { UserService } from '../../usuarios/services/user.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import Swal from 'sweetalert2';
@@ -22,7 +20,6 @@ export class FormUserComponent implements OnInit {
   minDate = new Date(1930, 1, 1);
   maxDate = new Date();
   user: User = new User();
-  regiones: Region[];
   titulo = 'Crear Usuarios';
   errores: string[];
   formularioCreado: FormGroup;
@@ -30,7 +27,6 @@ export class FormUserComponent implements OnInit {
   constructor(
     private userService: UserService,
     private router: Router,
-    private regionService: RegionService,
     private activatedRoute: ActivatedRoute,
     public loadingService: LoadingService,
     public formBuilder: FormBuilder
@@ -53,7 +49,6 @@ export class FormUserComponent implements OnInit {
           });
         }
       });
-    // this.regionService.getRegionLista().subscribe(regiones => this.regiones = regiones);
     this.loadingService.cerrarModal();
   }
 
@@ -99,13 +94,6 @@ export class FormUserComponent implements OnInit {
         this.loadingService.cerrarModal();
       }
     );
-  }
-
-  public compararRegion(o1: Region, o2: Region): boolean {
-    if (o1 === undefined && o2 === undefined) {
-      return true;
-    }
-    return o1 === null || o2 === null || o1 === undefined || o2 === undefined ? false : o1.id === o2.id;
   }
 
   // tratamiento a formulario

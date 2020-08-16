@@ -1,10 +1,10 @@
 import { Component, Input } from '@angular/core';
-import { User } from '../interfaces/user';
-import { UserService  } from '../services/user.service';
-import { ModalUserService  } from '../services/modal-user.service';
+import { User } from '../../usuarios/interfaces/user';
+import { UserService  } from '../../usuarios/services/user.service';
+import { ModalUserService  } from '../../usuarios/services/modal-user.service';
 import { HttpEventType } from '@angular/common/http';
 import Swal from 'sweetalert2';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../../usuarios/services/auth.service';
 
 @Component({
   selector: 'app-detalle-user',
@@ -41,39 +41,7 @@ export class DetalleUserComponent {
     }
   }
 
-  subirFoto() {
-    if (!this.fotoSelecionada) {
-      this.rutaFoto = 'Selecionar Foto';
-      Swal.fire({
-        type: 'error',
-        title: 'Error al Subir Imagen',
-        text: `No ha selecionado una imagen`,
-        footer: 'Intente de nuevo',
-        });
 
-    } else {
-    this.userService.subirFoto(this.fotoSelecionada, this.user.id)
-    .subscribe( event => {
-      if (event.type === HttpEventType.UploadProgress) {
-            this.progreso = Math.round((event.loaded / event.total) * 100);
-      } else if (event.type === HttpEventType.Response) {
-          const response: any = event.body;
-          this.user = response.user as User;
-          this.modalUserService.notificarUpload.emit(this.user);
-          this.rutaFoto = 'Selecionar Foto';
-          this.fotoSelecionada = null;
-          Swal.fire({
-            type: 'success',
-            title: 'La Foto se ha subido con Exito!',
-            text: response.mensaje,
-            footer: '',
-            });
-          // pendiente meter un time out
-          this.progreso = 0;
-      }
-    });
-  }
-  }
   cerrarModal() {
     this.modalUserService.cerrarModal();
     this.fotoSelecionada = null;

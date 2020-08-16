@@ -5,7 +5,7 @@ import { tap } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { ActivatedRoute } from '@angular/router';
 import { ModalProductoService  } from '../services/modal-producto.service';
-import { AuthService } from '../../users/services/auth.service';
+import { AuthService } from '../../usuarios/services/auth.service';
 import { ModalProductoBuscarService } from '../producto-buscar/modal-producto-buscar.service';
 import { FuncionesService } from '../../generales/services/funciones.service';
 import { LoadingService } from '../../generales/services/loading.service';

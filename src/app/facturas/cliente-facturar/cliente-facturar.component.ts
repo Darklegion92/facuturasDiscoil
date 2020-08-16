@@ -4,8 +4,8 @@ import { Observable } from 'rxjs';
 import { map,  flatMap } from 'rxjs/operators';
 import { ModalFacturaService } from './../services/modalFactura.service';
 import { FormControl } from '@angular/forms';
-import { Cliente } from '../../clientes/interfaces/cliente';
-import { ClienteService } from '../../clientes/services/cliente.service';
+import { Cliente } from '../../usuarios/interfaces/cliente';
+import { ClienteService } from '../../usuarios/services/cliente.service';
 
 @Component({
   selector: 'app-cliente-facturar',

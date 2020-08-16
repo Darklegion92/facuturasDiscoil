@@ -1,6 +1,7 @@
+import { FuncionesService } from './../../generales/services/funciones.service';
 import { Injectable } from '@angular/core';
 import { Factura } from '../interfaces/factura';
-import { HttpClient,  HttpRequest, HttpEvent } from '@angular/common/http';
+import { HttpClient,  HttpRequest, HttpEvent, HttpHeaders } from '@angular/common/http';
 import { Observable,  throwError } from 'rxjs';
 import {  catchError, map, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
@@ -11,19 +12,32 @@ import { Router } from '@angular/router';
 })
 export class FacturaService {
 
-  private urlEndPoint = 'http://192.168.1.50:3001';
+  private urlEndPoint: string;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private funcionesService: FuncionesService) {
+                this.urlEndPoint = `${this.funcionesService.configuracionUrlApi()}`;
+               }
 
   public getFacturas(): Observable<Factura[]> {
-    return this.http.get<Factura[]>(`${this.urlEndPoint}/pedidos/`);
+    const credenciales = sessionStorage.getItem('token');
+    const httpHeaders = new HttpHeaders({
+      'Content-Type': 'application/x-www-form-urlencoded',
+      // tslint:disable-next-line: object-literal-key-quotes
+      'autorizacion': 'Basic ' + credenciales
+    });
+    return this.http.get<Factura[]>(`${this.urlEndPoint}/pedidos/`, { headers: httpHeaders });
   }
 
 
   getFactura(id: string): Observable<Factura> {
-    console.log('este servicio es');
-    console.log('llego con id ' + id);
-    return this.http.get<Factura>(`${this.urlEndPoint}/pedidos/${id}`);
+    const credenciales = sessionStorage.getItem('token');
+    const httpHeaders = new HttpHeaders({
+      'Content-Type': 'application/x-www-form-urlencoded',
+      // tslint:disable-next-line: object-literal-key-quotes
+      'autorizacion': 'Basic ' + credenciales
+    });
+    return this.http.get<Factura>(`${this.urlEndPoint}/pedidos/${id}`, { headers: httpHeaders });
   }
 
 
@@ -32,15 +46,23 @@ export class FacturaService {
   }
 
   create(factura: Factura): Observable<Factura> {
-    console.log('mostra facura');
-    console.log(factura);
-    return this.http.post<Factura>(`${this.urlEndPoint}/pedidos/guardar`, factura);
+    const credenciales = sessionStorage.getItem('token');
+    const httpHeaders = new HttpHeaders({
+      'Content-Type': 'application/x-www-form-urlencoded',
+      // tslint:disable-next-line: object-literal-key-quotes
+      'autorizacion': 'Basic ' + credenciales
+    });
+    return this.http.post<Factura>(`${this.urlEndPoint}/pedidos/guardar`, factura, { headers: httpHeaders });
   }
 
   createFactura(factura: Factura): Observable<Factura> {
-    console.log('metodo 2');
-    console.log(factura);
-    return this.http.post(`${this.urlEndPoint}/pedidos/guardar`, factura).pipe(
+    const credenciales = sessionStorage.getItem('token');
+    const httpHeaders = new HttpHeaders({
+      'Content-Type': 'application/x-www-form-urlencoded',
+      // tslint:disable-next-line: object-literal-key-quotes
+      'autorizacion': 'Basic ' + credenciales
+    });
+    return this.http.post(`${this.urlEndPoint}/pedidos/guardar`, factura, { headers: httpHeaders }).pipe(
       map((response: any ) => response.factura as Factura ),
       catchError (e => {
         if (e.status === 400) {
@@ -54,24 +76,40 @@ export class FacturaService {
     );
   }
 
-  //  cambiaFactura(factura: Factura): Observable<Factura> {
-  //   console.log('mostra facura');
-  //   console.log(factura);
-  //   return this.http.post<Factura>(`${this.urlEndPoint}/pedidos/guardar`, factura);
-  //  }
+
 
     cambiaEstadoFactura(id: string, estado: string): Observable<Factura> {
-      // return this.http.get<Factura>(`${this.urlEndPoint}/pedidos/${id}`);
-      console.log('llego a cambiar' + id);
-      return this.http.get<Factura>(`${this.urlEndPoint}/pedidos/${estado}/${id}`);
+      const credenciales = sessionStorage.getItem('token');
+      const httpHeaders = new HttpHeaders({
+        'Content-Type': 'application/x-www-form-urlencoded',
+        // tslint:disable-next-line: object-literal-key-quotes
+        'autorizacion': 'Basic ' + credenciales
+      });
+      //  return this.http.get<User>(`${this.urlEndPoint}/${id}`, { headers: httpHeaders } ).pipe(
+      return this.http.get<Factura>(`${this.urlEndPoint}/pedidos/${estado}/${id}`, { headers: httpHeaders });
     }
 
   filtrarFacturas(term: string): Observable<Factura[]> {
-    return this.http.get<Factura[]>(`${this.urlEndPoint}/filtrar-facturas/${term}`);
+   const credenciales = sessionStorage.getItem('token');
+   const httpHeaders = new HttpHeaders({
+     'Content-Type': 'application/x-www-form-urlencoded',
+     // tslint:disable-next-line: object-literal-key-quotes
+     'autorizacion': 'Basic ' + credenciales
+   });
+   //  return this.http.get<User>(`${this.urlEndPoint}/${id}`, { headers: httpHeaders } ).pipe(
+   return this.http.get<Factura[]>(`${this.urlEndPoint}/filtrar-facturas/${term}`, { headers: httpHeaders });
   }
 
   getFiltrarFacturasPorFecha(term1: string, term2: string): Observable<Factura[]> {
-      return this.http.get<Factura[]>(`${this.urlEndPoint}/pedidos/filtro?fechainicial=${term1}&fechafinal=${term2}`);
+   const credenciales = sessionStorage.getItem('token');
+   const httpHeaders = new HttpHeaders({
+     'Content-Type': 'application/x-www-form-urlencoded',
+     // tslint:disable-next-line: object-literal-key-quotes
+     'autorizacion': 'Basic ' + credenciales
+   });
+   //  return this.http.get<User>(`${this.urlEndPoint}/${id}`, { headers: httpHeaders } ).pipe(
+   return this.http.get<Factura[]>(`${this.urlEndPoint}/pedidos/filtro?fechainicial=${term1}&fechafinal=${term2}`,
+     { headers: httpHeaders });
   }
 
 }

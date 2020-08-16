@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Factura } from '../interfaces/factura';
-import { ClienteService } from '../../clientes/services/cliente.service';
+import { ClienteService } from '../../usuarios/services/cliente.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { FormControl } from '@angular/forms';
@@ -12,11 +12,11 @@ import { MatAutocompleteSelectedEvent } from '@angular/material';
 import Swal from 'sweetalert2';
 import { Producto } from '../../productos/interfaces/producto';
 import { ProductoService } from '../../productos/services/producto.service';
-import { AuthService } from '../../users/services/auth.service';
-import { UserService } from '../../users/services/user.service';
+import { AuthService } from '../../usuarios/services/auth.service';
+import { UserService } from '../../usuarios/services/user.service';
 import { FuncionesService } from '../../generales/services/funciones.service';
 import { LoadingService } from '../../generales/services/loading.service';
-import { User } from 'src/app/users/interfaces/user';
+import { User } from 'src/app/usuarios/interfaces/user';
 
 
 @Component({
@@ -47,13 +47,8 @@ export class FacturasComponent implements OnInit {
               ) { }
 
   ngOnInit() {
-    try {
-      console.log(JSON.parse(sessionStorage.getItem('usuario')));
-    } catch (e) {
-      console.log(e);
-    }
     this.factura.usuario = (JSON.parse(sessionStorage.getItem('usuario')));
-    console.log(this.factura.usuario);
+    // console.log(this.factura.usuario);
     this.productosFiltrados = this.autocompleteControl.valueChanges
       .pipe(
         map(value => typeof value === 'string' ? value : value.nombre),
@@ -165,8 +160,6 @@ export class FacturasComponent implements OnInit {
               footer: 'Intente de nuevo',
               });
             this.loadingService.cerrarModal();
-            console.log('ide factura');
-            console.log(factura.id);
             this.router.navigate(['/facturas', factura.id]);
           },
           err => {

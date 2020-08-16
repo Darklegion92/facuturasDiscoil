@@ -1,15 +1,15 @@
 <app-loading *ngIf="loadingService.modal"></app-loading>
-<div class="card bg-light">
-  <div class="card-header">
+<div class="card ">
+  <div class="card-header bg-dark text-muted">
     <h4>
       <strong>
-        {{titulo}}: {{factura.descripcion}} algo
+        {{titulo}}: {{factura.descripcion}} 
       </strong>
     </h4>
   </div>
   <div class="card-body">
     <h4 class="card-title">
-      <a [routerLink]="['/clientes']"
+      <a [routerLink]="['/usuarios']"
           class="btn btn-rounded btn-outline-warning btn-xs ">
           &laquo; volver
       </a>

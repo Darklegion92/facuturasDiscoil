@@ -1,6 +1,7 @@
+import { FuncionesService } from './../../generales/services/funciones.service';
 import { Injectable } from '@angular/core';
 import { Producto } from '../interfaces/producto';
-import { HttpClient, HttpRequest, HttpEvent } from '@angular/common/http';
+import { HttpClient, HttpRequest, HttpEvent, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import {  catchError, map, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
@@ -8,15 +9,25 @@ import Swal from 'sweetalert2';
 
 @Injectable()
 export class ProductoService {
-private urlEndPoint = `http://192.168.1.50:3001`;
+private urlEndPoint: string;
 
 
 constructor(private http: HttpClient,
             private router: Router,
-            ) { }
+            private funcionesService: FuncionesService
+            ) {
+              this.urlEndPoint = `${this.funcionesService.configuracionUrlApi()}`;
+            }
 
             public getProductos(page: number): Observable<any> {
-              return this.http.get(this.urlEndPoint + '/page/' + page).pipe(
+              const credenciales = sessionStorage.getItem('token');
+              const httpHeaders = new HttpHeaders({
+                'Content-Type': 'application/x-www-form-urlencoded',
+                // tslint:disable-next-line: object-literal-key-quotes
+                'autorizacion': 'Basic ' + credenciales
+              });
+   //  return this.http.get<User>(`${this.urlEndPoint}/${id}`, { headers: httpHeaders } ).pipe(
+              return this.http.get(this.urlEndPoint + '/page/' + page, { headers: httpHeaders }).pipe(
                 tap((response: any) => {
                      // console.log('ProductoService: tap 1');
                      (response.content as Producto[]).forEach(producto => {
@@ -39,6 +50,7 @@ constructor(private http: HttpClient,
                 )
               );
             }
+
   create(producto: Producto): Observable<Producto> {
     return this.http.post(this.urlEndPoint, producto).pipe(
       map((response: any ) => response.producto as Producto ),
@@ -60,7 +72,14 @@ constructor(private http: HttpClient,
   }
 
   getProducto(id): Observable<Producto> {
-    return this.http.get<Producto>(`${this.urlEndPoint}/${id}`).pipe(
+    const credenciales = sessionStorage.getItem('token');
+    const httpHeaders = new HttpHeaders({
+      'Content-Type': 'application/x-www-form-urlencoded',
+      // tslint:disable-next-line: object-literal-key-quotes
+      'autorizacion': 'Basic ' + credenciales
+    });
+   //  return this.http.get<User>(`${this.urlEndPoint}/${id}`, { headers: httpHeaders } ).pipe(
+    return this.http.get<Producto>(`${this.urlEndPoint}/${id}`, { headers: httpHeaders }).pipe(
       catchError (e => {
         if (e.status !== 401 && e.error.mensaje) {
           this.router.navigate(['/productos']);
@@ -117,8 +136,14 @@ constructor(private http: HttpClient,
   }
 
   filtrarProductos(term: string): Observable<Producto[]> {
-    console.log('ingreso a filtrarProductos');
-    return this.http.get<Producto[]>(`${this.urlEndPoint}/articulos/consultar/${term}`);
+    const credenciales = sessionStorage.getItem('token');
+    const httpHeaders = new HttpHeaders({
+      'Content-Type': 'application/x-www-form-urlencoded',
+      // tslint:disable-next-line: object-literal-key-quotes
+      'autorizacion': 'Basic ' + credenciales
+    });
+   //  return this.http.get<User>(`${this.urlEndPoint}/${id}`, { headers: httpHeaders } ).pipe(
+    return this.http.get<Producto[]>(`${this.urlEndPoint}/articulos/consultar/${term}`, { headers: httpHeaders });
   }
 
 
@@ -126,5 +151,5 @@ constructor(private http: HttpClient,
     console.log('ingreso a filtrarClientes');
     return this.http.get<Producto[]>(`${this.urlEndPoint}/articulos/consultar/${term}`);
   }
- 
+
 }

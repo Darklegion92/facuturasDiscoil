@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FacturaService } from '../services/factura.service';
 import { Factura } from '../interfaces/factura';
-import { AuthService } from '../../users/services/auth.service';
+import { AuthService } from '../../usuarios/services/auth.service';
 import { ModalFacturaService } from '../services/modalFactura.service';
 import { ModalFacturaBuscarService } from '../services/modal-factura-buscar.service';
 import { FuncionesService } from '../../generales/services/funciones.service';
@@ -17,6 +17,15 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 export class FiltrarFacturasComponent implements OnInit {
 
+  constructor(
+    private facturaService: FacturaService,
+    public modalFacturaService: ModalFacturaService,
+    public modalFacturaBuscarService: ModalFacturaBuscarService,
+    private funcionesService: FuncionesService,
+    public loadingService: LoadingService,
+    public authService: AuthService
+  ) { }
+
   titulo = 'Informes - Facturas';
   facturas: Factura[];
   fechaInicioFiltro: string;
@@ -28,17 +37,11 @@ export class FiltrarFacturasComponent implements OnInit {
 
 
   estados: string[] = ['ANULADO', 'Seleccione'];
+  estadosFiltro: string[] = ['ANULADO', 'ESPERA', 'DESPACHO', 'ACTIVO'];
   default: string;
   estadoFormulario: FormGroup;
 
-  constructor(
-    private facturaService: FacturaService,
-    public modalFacturaService: ModalFacturaService,
-    public modalFacturaBuscarService: ModalFacturaBuscarService,
-    private funcionesService: FuncionesService,
-    public loadingService: LoadingService,
-    public authService: AuthService
-  ) { }
+  filterFactura = '';
 
   ngOnInit() {
     this.estadoFormulario = new FormGroup({
@@ -60,8 +63,8 @@ cambiarEstadoFactura(fact: Factura) {
   estado = this.estadoFormulario.get('estado').value;
   if (estado !== 'Seleccione') {
     this.facturaService.cambiaEstadoFactura(fact._id, estado).subscribe(factura => {
-    console.log(factura);
-    this.cargarUsuarioDetalle();
+    // console.log(factura);
+    this.filtrarFacturas();
     // this.facturaService.cambiaEstadoFactura(id);
     this.loadingService.cerrarModal();
     },
@@ -111,4 +114,5 @@ cambiarEstadoFactura(fact: Factura) {
 formatNumber(cantidad: number): string {
       return this.funcionesService.formatNumber(cantidad);
   }
+
 }

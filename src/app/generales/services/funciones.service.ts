@@ -8,6 +8,10 @@ export class FuncionesService {
 
   constructor() { }
 
+  configuracionUrlApi() {
+    return 'http://localhost:3001';
+  }
+
   formatNumber(numero: number): string {
       if (numero !== null && numero !== undefined) {
         const separador = '.'; // separador para los miles

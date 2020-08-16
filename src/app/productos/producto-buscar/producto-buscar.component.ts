@@ -8,7 +8,7 @@ import { Producto } from '../interfaces/producto';
 import { ProductoService } from '../services/producto.service';
 import { ModalProductoService } from '../services/modal-producto.service';
 import { FuncionesService } from '../../generales/services/funciones.service';
-import { AuthService } from '../../users/services/auth.service';
+import { AuthService } from '../../usuarios/services/auth.service';
 
 @Component({
   selector: 'app-producto-buscar',

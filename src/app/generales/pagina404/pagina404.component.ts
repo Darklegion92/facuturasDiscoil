@@ -14,7 +14,6 @@ export class Pagina404Component implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe(params => {
-      console.log(params);
       // const id = +params.get('id');
       // this.facturaService.getFactura(id)
       // .subscribe(factura => {this.factura = factura,

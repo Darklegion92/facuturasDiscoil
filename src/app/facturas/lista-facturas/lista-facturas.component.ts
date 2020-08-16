@@ -3,14 +3,14 @@ import { FacturaService } from './../services/factura.service';
 import { Factura } from '../interfaces/factura';
 import { tap } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
-import { AuthService } from '../../users/services/auth.service';
+import { AuthService } from '../../usuarios/services/auth.service';
 import { ModalFacturaService } from './../services/modalFactura.service';
 import { ModalFacturaBuscarService } from './../services/modal-factura-buscar.service';
 import { ProductoService } from '../../productos/services/producto.service';
 import { FuncionesService } from '../../generales/services/funciones.service';
 import { LoadingService } from '../../generales/services/loading.service';
-import { UserService } from '../../users/services/user.service';
-import { User } from 'src/app/users/interfaces/user';
+import { UserService } from '../../usuarios/services/user.service';
+import { User } from 'src/app/usuarios/interfaces/user';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -32,6 +32,9 @@ export class ListaFacturasComponent implements OnInit {
   estados: string[] = ['ANULADO', 'Seleccione'];
   default: string;
   estadoFormulario: FormGroup;
+
+  estadosFiltro: string[] = ['ANULADO', 'ESPERA', 'DESPACHO', 'ACTIVO'];
+  filterFactura = '';
 
   constructor(
     private facturaService: FacturaService,
@@ -67,7 +70,6 @@ cambiarEstadoFactura(fact: Factura) {
   estado = this.estadoFormulario.get('estado').value;
   if (estado !== 'Seleccione') {
     this.facturaService.cambiaEstadoFactura(fact._id, estado).subscribe(factura => {
-    console.log(factura);
     this.cargarListadoFacturas();
     // this.facturaService.cambiaEstadoFactura(id);
     this.loadingService.cerrarModal();

@@ -1,6 +1,6 @@
 import { ItemFactura } from './item-factura';
-import { Cliente } from '../../clientes/interfaces/cliente';
-import { User } from '../../users/interfaces/user';
+import { Cliente } from '../../usuarios/interfaces/cliente';
+import { User } from '../../usuarios/interfaces/user';
 export class Factura {
   id?: number;
   // tslint:disable-next-line: variable-name

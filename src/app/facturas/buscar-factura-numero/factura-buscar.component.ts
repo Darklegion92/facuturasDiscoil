@@ -3,7 +3,7 @@ import { ModalFacturaBuscarService } from '../services/modal-factura-buscar.serv
 import { Factura } from '../interfaces/factura';
 import { FacturaService } from '../services/factura.service';
 import { FuncionesService } from '../../generales/services/funciones.service';
-import { AuthService } from '../../users/services/auth.service';
+import { AuthService } from '../../usuarios/services/auth.service';
 import Swal from 'sweetalert2';
 import { LoadingService } from '../../generales/services/loading.service';
 

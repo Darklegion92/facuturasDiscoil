@@ -1,24 +1,27 @@
 <app-loading *ngIf="loadingService.modal"></app-loading>
-<div class="card bg-light" *ngIf="factura">
-  <div class="card-header">
+<div class="card " *ngIf="factura">
+  <div class="card-header bg-dark text-muted">
       <h4><strong>
         {{titulo}}
       </strong></h4>
   </div>
   <div class="card-body">
     <h4 class="card-title">
-      <a class="btn btn-rounded btn-outline-warning btn-xs  mb-1">&laquo; Regresar</a>
+      <a [routerLink]="['/facturas']"
+              class="btn btn-outline-warning btn-xs my-2 mx-2">&laquo;
+              Regresar
+    </a>
       <td >
 
-        <button (click)="generarFactura(factura)"
+        <!-- <button (click)="generarFactura(factura)"
               class="btn btn-rounded btn-outline-secondary btn-xs " type="button" >
         Imprimir
-        </button>
+        </button> -->
       </td>
     </h4>
 
     <ul class="list-group my-2">
-      <li class="list-group-item list-group-item-primary">Datos del cliente</li>
+      <li class="list-group-item list-group-item-primary bg-dark text-muted">Datos del cliente</li>
       <li class="list-group-item"> <strong>Nombres: </strong> {{factura.usuario.nombre | uppercase }} </li>
       <li class="list-group-item"> <strong>Apellidos:  </strong> {{factura.usuario.apellido | uppercase}}</li>
       <li class="list-group-item"> <strong>Documento:</strong>  {{factura.usuario.documento}}</li>
@@ -26,7 +29,7 @@
     </ul>
 
     <ul class="list-group my-2">
-      <li class="list-group-item list-group-item-primary">Datos de la factura</li>
+      <li class="list-group-item list-group-item-primary bg-dark text-muted">Datos de la factura</li>
       <!-- <li class="list-group-item"> <strong>Folio: </strong>  {{factura.id}}</li> -->
       <li class="list-group-item"> 
         <ul class="list-group my-2">

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Factura } from '../interfaces/factura';
 import { ActivatedRoute } from '@angular/router';
 import { FacturaService } from '../services/factura.service';
-import { AuthService } from '../../users/services/auth.service';
+import { AuthService } from '../../usuarios/services/auth.service';
 import { FuncionesService } from '../../generales/services/funciones.service';
 import { LoadingService } from '../../generales/services/loading.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -56,7 +56,7 @@ export class DetalleFacturaComponent implements OnInit {
     estado = this.estadoFormulario.get('estado').value;
     if (estado !== 'Seleccione') {
       this.facturaService.cambiaEstadoFactura(fact._id, estado).subscribe(factura => {
-      console.log(factura);
+      // console.log(factura);
       this.cargarFacura();
       // this.facturaService.cambiaEstadoFactura(id);
       this.loadingService.cerrarModal();
@@ -72,7 +72,7 @@ export class DetalleFacturaComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe(params => {
       let id: string;
       id = params.get('id');
-      console.log('llego con id ' + id);
+      // console.log('llego con id ' + id);
       this.facturaService.getFactura(id)
       .subscribe(factura => {this.factura = factura,
            this.loadingService.cerrarModal();

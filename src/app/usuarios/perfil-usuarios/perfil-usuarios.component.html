@@ -1,0 +1,135 @@
+<!-- <app-loading *ngIf="loadingService.modal"></app-loading> -->
+<app-modal-publicidad *ngIf="modalPublicidadService.modal"></app-modal-publicidad>
+<div class="container"  *ngIf="user">
+  <div class="row">
+    <div class="col-sm">
+      <ul *ngIf="user"  class="list-group text-dark mb-3">
+        <li class="list-group-item bg-dark text-white-50">
+          <h4>
+            <strong>
+              {{titulo}}
+            </strong>
+          </h4>
+        </li>
+        <li *ngIf="user.nombre"
+          class="list-group-item">
+          <strong>Nombre: </strong>
+          {{user.nombre | uppercase}}
+        </li>
+        <li *ngIf="user.apellido"
+          class="list-group-item">
+          <strong>Apellido: </strong>
+          {{user.apellido | uppercase}}
+        </li>
+        <!-- <li  *ngIf="user.region.nombre"
+          class="list-group-item">
+          <strong>Barrio: </strong>
+          {{user.region.nombre | uppercase}}
+        </li> -->
+        <li *ngIf="user.direccion"
+          class="list-group-item">
+          <strong>Direccion: </strong>
+          {{user.direccion | uppercase}}
+        </li>
+        <li *ngIf="user.celular1"
+          class="list-group-item">
+          <strong>Celular 1: </strong>
+          {{user.celular1}}
+        </li>
+        <li *ngIf="user.celular2"
+          class="list-group-item">
+          <strong>Celular 2: </strong>
+          {{user.celular2}}
+        </li>
+        <li *ngIf="user.telefono"
+          class="list-group-item">
+          <strong>Telefono: </strong>
+          {{user.telefono}}
+        </li>
+        <li *ngIf="user.email"
+          class="list-group-item">
+          <strong>Email: </strong>
+          {{user.email | uppercase}}
+        </li>
+        <li *ngIf="user.fecha"
+          class="list-group-item">
+          <strong>Fec. Nacimiento: </strong>
+          {{user.fecha | date:"fullDate"}}
+        </li>
+        <li *ngIf="user.createAt"
+          class="list-group-item">
+          <strong>Fec. Creacion: </strong>
+          {{user.createAt | date:"fullDate"}}
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="row" >
+    <div class="col-sm-12">
+      <ul class="list-group text-dark mb-3">
+        <li class="list-group-item bg-dark text-white-50">
+          <button type="button"
+                class="btn btn-outline-success btn-xs"
+                [routerLink]="['/facturas/form']"
+                >
+                Crear Factura
+        </button>
+        </li>
+        <li class="list-group-item">
+          <span> <strong>Filtre Por Estados</strong> </span>
+            <div class="form-group ml-3">
+              <!-- <input type="text" class="form-control" name="filterFactura" placeholder="Search..." 
+              [(ngModel)]="filterFactura"> -->
+              <select  *ngIf="user.facturas.length > 0"
+                name="filterFactura" [(ngModel)]="filterFactura">
+                <option [value]="item" *ngFor="let item of estadosFiltro">
+                  {{item}}
+                </option>
+                </select>
+            </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+    <div class="row">
+
+      <div class="alert alert-info my-4" *ngIf="user.facturas.length == 0">
+        No hay Facturas asignadas para el user:
+        <strong> {{user.nombre}} {{user.apellido}} </strong>
+      </div>
+
+      
+
+      <table class="table table-bordered text-center table-striped my-4"
+                    *ngIf="user.facturas.length > 0">
+        <thead class="bg-dark  text-white">
+          <tr>
+            <th >Detalle</th>
+            <th>Fecha</th>
+            <th>Estado</th>
+            <th>Cambiar</th>
+            <th >Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let factura of user.facturas | filter:filterFactura">
+            <td class="text-center"><button class="btn btn-primary btn-sm" type="button"
+              [routerLink]="['/facturas', factura._id]">ver</button>
+            </td>
+            <td>{{factura.createAt | date:"full"}}</td>
+            <td >{{factura.estado}}</td>
+            <td >
+              <form [formGroup]="estadoFormulario">
+                <select id="estado" formControlName="estado" 
+                    (change)="cambiarEstadoFactura(factura)">
+                    <option *ngFor="let estado of estados" 
+                    [ngValue]="estado">{{ estado }}</option>
+                </select>
+              </form>
+            </td>
+            <td class="text-right">{{formatNumber(factura.total)}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+</div>

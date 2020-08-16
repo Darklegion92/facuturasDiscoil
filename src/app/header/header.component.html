@@ -17,11 +17,11 @@
       class="navbar-nav mr-auto">
       <li *ngIf="authService.hasRole('ROLE_USER')"
           class="nav-item" routerLinkActive='Active'>
-        <a class="nav-link" routerLink="clientes/perfil">Perfil</a>
+        <a class="nav-link" routerLink="usuarios/perfil">Perfil</a>
       </li>
       <li *ngIf="authService.hasRole('ROLE_ADMIN')"
           class="nav-item" routerLinkActive='Active'>
-        <a class="nav-link" routerLink="clientes">Lista Usuarios</a>
+        <a class="nav-link" routerLink="usuarios">Lista Usuarios</a>
       </li>
       <!-- <li class="nav-item" routerLinkActive='Active'>
         <a class="nav-link" routerLink="/categorias">Categorias</a>

@@ -1,0 +1,40 @@
+<app-loading *ngIf="loadingService.modal"></app-loading>
+<div class="card border-primary text-center">
+  <div class="card-header">
+    <h2>
+      <strong>
+        Sistema - Inventarios - Facturacion - Informes
+      </strong>
+    </h2>
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="card-body">
+        <mat-card>
+          <mat-card-content>
+        <form method="post">
+          <div class="form-group col-sm-12">
+            <input [(ngModel)]="usuario.username" type="text" class="form-control"
+            name="username" id="username" placeholder="Username" autofocus required>
+          </div>
+          <div class="form-group col-sm-12">
+            <input [(ngModel)]="usuario.password" type="password" class="form-control"
+            name="password" id="password" placeholder="Password" required>
+          </div>
+          <div class="form-group col-sm-12">
+            <input (click)='login()' type="submit" class="btn btn-lg btn-primary btn-block" value="Login">
+          </div>
+        </form>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+    <!-- <div class="col-sm-6 my-3">
+        <img    src="http://localhost:8080/images/logo.jpg"
+                alt="sin-foto" class="img-thumbnail rounded"
+                style="width: 45%; cursor: pointer;">
+    </div> -->
+  </div>
+
+
+</div>

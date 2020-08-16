@@ -1,22 +1,30 @@
-<div class="abrir-modal animacion fadeIn modal-backdrop" >
-<div  style="display: block;"
-    class="modal" tabindex="-1" role="dialog">
-  <div class="modal-dialog modal-lg " role="document">
-    <div class="modal-content"> 
-      <div class="modal-header">
-      <button (click)="cerrarModal()"
-        type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span class="text-white" aria-hidden="true">&times;</span>
-      </button>
-    </div>
-                <div class="modal-body text-center">
-                  <img *ngIf="modalPublicidadService.modal"
-                    src="http://192.168.1.50:3001/img/login.png" alt="loading"
-                  style="width: 121px; cursor: pointer;">
-    </div>
+<div class="abrir-modal animacion fadeIn modal-backdrop">
+  <div style="display: block;" class="modal mt-5" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg mt-5"  role="document">
+      <div class="modal-content mt-5">
+        <div class="modal-body text-center bg-dark mt-3">
+          <button
+            (click)="cerrarModal()"
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span class="text-dark" aria-hidden="true">&times;</span>
+          </button>
+          <div class="portada">
+           
+              <img src={{rutaImgPublicidad}} alt="">
+             <!-- <a href="http://www.desarrollofrontend.com" target="blank">Desarrollofrontend.com</a> -->
+            <!-- <div class="text">
+                <h1>div con imagen de fondo responsive</h1> 
+                <h3>Imagen adaptada a todas las resoluciones de pantalla</h3>
+            </div> -->
+        </div>
+          
+        </div>
+      </div>
     </div>
   </div>
 </div>
-</div>
-
-
+<!-- src="http://localhost:3001/img/login.png" alt="loading" -->

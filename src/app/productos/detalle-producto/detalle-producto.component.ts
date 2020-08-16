@@ -4,7 +4,7 @@ import { ProductoService  } from '../services/producto.service';
 import { ModalProductoService  } from '../services/modal-producto.service';
 import Swal from 'sweetalert2';
 import { HttpEventType } from '@angular/common/http';
-import { AuthService } from '../../users/services/auth.service';
+import { AuthService } from '../../usuarios/services/auth.service';
 import { ModalProductoBuscarService } from '../producto-buscar/modal-producto-buscar.service';
 import { FuncionesService } from '../../generales/services/funciones.service';
 

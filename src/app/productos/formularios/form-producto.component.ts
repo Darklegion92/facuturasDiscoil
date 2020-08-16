@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Producto } from '../interfaces/producto';
 import { ProductoService } from '../services/producto.service';
-import { CategoriaService } from '../../categorias/services/categoria.service';
-import { Categoria } from '../../categorias/interfaces/categoria';
 import {Router, ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 import { FuncionesService } from '../../generales/services/funciones.service';
@@ -18,13 +16,11 @@ export class FormProductoComponent implements OnInit {
   prePrecioCompra: number;
   preCantidad: number;
   producto: Producto = new Producto();
-  categorias: Categoria[];
   titulo = 'Crear Productos';
   errores: string[];
 
   constructor(
         private productoService: ProductoService,
-        private categoriaService: CategoriaService,
         private router: Router,
         private funcionesServicer: FuncionesService,
         private activatedRoute: ActivatedRoute,
@@ -100,15 +96,9 @@ export class FormProductoComponent implements OnInit {
         && this.preCantidad !== this.producto.cantidad && this.producto.cantidad > 0 ) {
           const diferenciaDeCantidad = this.producto.cantidad - this.preCantidad;
           const inversionAnterior = this.prePrecioCompra * this.preCantidad;
-          console.log('inversion anterior: ' + this.prePrecioCompra + ' * ' + this.preCantidad +
-                      ' = ' + inversionAnterior);
           const inversionActual = this.producto.precioCompra * diferenciaDeCantidad;
-          console.log('inversion nueva: ' + this.producto.precioCompra + ' * ' + diferenciaDeCantidad +
-                      ' = ' + inversionActual);
           const inversionTotal = inversionAnterior + inversionActual;
-          console.log('inversion total: ' + inversionTotal);
           const nuevoCostoUnidad = ( inversionTotal / this.producto.cantidad );
-          console.log('nuevo costo unidad : ' + nuevoCostoUnidad);
           this.producto.precioCompra = nuevoCostoUnidad;
     }
 
