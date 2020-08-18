@@ -5,5 +5,5 @@ import { Component} from '@angular/core';
   templateUrl: './footer.component.html'
 })
 export class FooterComponent {
-  public autor: any = {  nombre: 'SOLTEC', apellido: ' - SOLUCIONES A TU ALCANCE -'};
+  public autor: any = {  parte1: 'SOLTEC', parte2: ' - SOLUCIONES A TU ALCANCE -'};
 }
