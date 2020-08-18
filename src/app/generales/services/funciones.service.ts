@@ -94,4 +94,17 @@ export class FuncionesService {
     }
   }
 
+  estadosFacturas(estadoFactura: string, role: string): any {
+    const estados = ['ANULADO', 'ESPERA', 'DESPACHO', 'ACTIVO', 'Seleccione'] ;
+    let result = estados.filter(word => word !== estadoFactura);
+    if (role === 'ADMIN' ) {
+        return  result;
+    } else if (estadoFactura !== 'ANULADO') {
+          result = ['ANULADO', 'Seleccione'];
+          return result;
+    } else {
+      return null;
+    }
+  }
+
 }

@@ -76,7 +76,7 @@ export class FormUsuariosComponent implements OnInit {
     this.userService.create(this.usuario).subscribe(response => {
       if (response.status === 200) {
         this.loadingService.abrirModal();
-        this.router.navigate(['/clientes']),
+        this.router.navigate(['/usuarios']),
          Swal.fire({
            type: 'success',
            title: 'Nuevo Usuario',
@@ -96,7 +96,7 @@ export class FormUsuariosComponent implements OnInit {
     this.userService.update(this.usuario)
     .subscribe(
       usuario => {
-        this.router.navigate(['/clientes']),
+        this.router.navigate(['/usuarios']),
         Swal.fire({
           type: 'success',
           title: 'Usuario',

@@ -36,7 +36,7 @@ export class FiltrarFacturasComponent implements OnInit {
   errores: string[];
 
 
-  estados: string[] = ['ANULADO', 'Seleccione'];
+  estados: string[] = null;
   estadosFiltro: string[] = ['ANULADO', 'ESPERA', 'DESPACHO', 'ACTIVO'];
   default: string;
   estadoFormulario: FormGroup;
@@ -47,15 +47,9 @@ export class FiltrarFacturasComponent implements OnInit {
     this.estadoFormulario = new FormGroup({
       estado: new FormControl(null)
     });
-
-    this.cargarSelects();
   }
 
-  cargarSelects(): void {
-    if (this.authService.hasRole('ROLE_ADMIN') ) {
-      this.estados = ['ANULADO', 'ESPERA', 'DESPACHO', 'ACTIVO', 'Seleccione'] ;
-    }
-}
+
 
 cambiarEstadoFactura(fact: Factura) {
   this.loadingService.abrirModal();
@@ -84,10 +78,16 @@ cambiarEstadoFactura(fact: Factura) {
             this.facturaService.getFiltrarFacturasPorFecha(this.fechaInicioFiltro, this.fechaFinFiltro)
           .subscribe(
             facturas => {this.facturas = facturas;
-                         this.facturas.forEach(datos => {
+                         this.facturas.forEach(item => {
+                           // aqui verificamos los datos del select
+              if (this.authService.hasRole('ROLE_ADMIN') ) {
+                this.estados = this.funcionesService.estadosFacturas(item.estado, 'ADMIN');
+                } else {
+                  this.estados = this.funcionesService.estadosFacturas(item.estado, 'USER');
+                  }
                           // tslint:disable-next-line: no-string-literal
-            this.estadoFormulario.controls['estado'].setValue('Seleccione',
-            {onlySelf: true});
+              this.estadoFormulario.controls['estado'].setValue('Seleccione',
+              {onlySelf: true});
                           });
                          this.loadingService.cerrarModal();
             },

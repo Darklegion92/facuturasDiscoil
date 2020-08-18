@@ -38,7 +38,7 @@
                 <th >Detalle</th>
                 <th>Fecha</th>
                 <th>Estado</th>
-                <th >Cambiar</th>
+                <th *ngIf="estados">Cambiar</th>
                 <th >Total</th>
                 <!-- <th *ngIf="authService.hasRole('ROLE_ADMIN')">eliminar</th> -->
               </tr>
@@ -50,7 +50,7 @@
       </td>
       <td>{{factura.createAt | date:"full"}}</td>
       <td >{{factura.estado}}</td>
-      <td >
+      <td *ngIf="estados">
         <form [formGroup]="estadoFormulario">
           <select id="estado" formControlName="estado" 
               (change)="cambiarEstadoFactura(factura)">

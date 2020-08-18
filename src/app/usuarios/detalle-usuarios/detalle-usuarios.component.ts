@@ -29,7 +29,7 @@ export class DetalleUsuariosComponent implements OnInit {
   errores: string[];
 
 
-  estados: string[] = ['ANULADO', 'Seleccione'];
+  estados: string[] = null;
   default: string;
   estadoFormulario: FormGroup;
 
@@ -50,14 +50,6 @@ export class DetalleUsuariosComponent implements OnInit {
     this.estadoFormulario = new FormGroup({
       estado: new FormControl(null)
     });
-
-    this.cargarSelects();
-  }
-
-  cargarSelects(): void {
-    if (this.authService.hasRole('ROLE_ADMIN') ) {
-      this.estados = ['ANULADO', 'ESPERA', 'DESPACHO', 'ACTIVO', 'Seleccione'] ;
-    }
   }
 
   cambiarEstadoFactura(fact: Factura) {
@@ -84,6 +76,12 @@ export class DetalleUsuariosComponent implements OnInit {
       this.usuarioServicio.getUser(id)
       .subscribe(user => {this.user = user,
         user.facturas.forEach((item: any) => {
+          // aqui verificamos los datos del select
+          if (this.authService.hasRole('ROLE_ADMIN') ) {
+            this.estados = this.funcionesService.estadosFacturas(item.estado, 'ADMIN');
+          } else {
+            this.estados = this.funcionesService.estadosFacturas(item.estado, 'USER');
+          }
           // tslint:disable-next-line: no-string-literal
           this.estadoFormulario.controls['estado'].setValue('Seleccione',
           {onlySelf: true});
