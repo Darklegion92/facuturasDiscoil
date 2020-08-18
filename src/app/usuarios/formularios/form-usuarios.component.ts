@@ -141,10 +141,9 @@ export class FormUsuariosComponent implements OnInit {
         Validators.maxLength(10)
       ])],
       email: ['', Validators.compose([
-        Validators.required, Validators.email
+         Validators.email
       ])],
       celular1: ['', Validators.compose([
-        Validators.required,
         Validators.minLength(10),
         Validators.maxLength(10)
       ])],
@@ -155,7 +154,7 @@ export class FormUsuariosComponent implements OnInit {
       ])],
       roles: ['prueba', Validators.required],
       // region: ['', Validators.required],
-      fecha: ['', Validators.required],
+      fecha: [''],
     });
   }
 

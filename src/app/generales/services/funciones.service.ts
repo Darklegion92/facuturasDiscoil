@@ -94,9 +94,10 @@ export class FuncionesService {
     }
   }
 
+
   estadosFacturas(estadoFactura: string, role: string): any {
     const estados = ['ANULADO', 'ESPERA', 'DESPACHO', 'ACTIVO', 'Seleccione'] ;
-    let result = estados.filter(word => word !== estadoFactura);
+    let result = estados.filter(filtro => filtro !== estadoFactura);
     if (role === 'ADMIN' ) {
         return  result;
     } else if (estadoFactura !== 'ANULADO') {
