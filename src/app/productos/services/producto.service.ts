@@ -143,13 +143,13 @@ constructor(private http: HttpClient,
       'autorizacion': 'Basic ' + credenciales
     });
    //  return this.http.get<User>(`${this.urlEndPoint}/${id}`, { headers: httpHeaders } ).pipe(
-    return this.http.get<Producto[]>(`${this.urlEndPoint}/articulos/consultar/${term}`, { headers: httpHeaders });
+    return this.http.get<Producto[]>(`${this.urlEndPoint}/articulos/consultar?nombre=${term}`, { headers: httpHeaders });
   }
 
 
   filtrarClientes(term: string): Observable<Producto[]> {
     console.log('ingreso a filtrarClientes');
-    return this.http.get<Producto[]>(`${this.urlEndPoint}/articulos/consultar/${term}`);
+    return this.http.get<Producto[]>(`${this.urlEndPoint}/articulos/consultar?nombre=${term}`);
   }
 
 }
