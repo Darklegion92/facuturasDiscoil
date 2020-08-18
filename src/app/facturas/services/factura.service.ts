@@ -22,7 +22,7 @@ export class FacturaService {
   public getFacturas(): Observable<Factura[]> {
     const credenciales = sessionStorage.getItem('token');
     const httpHeaders = new HttpHeaders({
-      'Content-Type': 'application/x-www-form-urlencoded',
+      'Content-Type': 'application/json',
       // tslint:disable-next-line: object-literal-key-quotes
       'autorizacion': 'Basic ' + credenciales
     });
@@ -33,7 +33,7 @@ export class FacturaService {
   getFactura(id: string): Observable<Factura> {
     const credenciales = sessionStorage.getItem('token');
     const httpHeaders = new HttpHeaders({
-      'Content-Type': 'application/x-www-form-urlencoded',
+      'Content-Type': 'application/json',
       // tslint:disable-next-line: object-literal-key-quotes
       'autorizacion': 'Basic ' + credenciales
     });
@@ -48,7 +48,7 @@ export class FacturaService {
   create(factura: Factura): Observable<Factura> {
     const credenciales = sessionStorage.getItem('token');
     const httpHeaders = new HttpHeaders({
-      'Content-Type': 'application/x-www-form-urlencoded',
+      'Content-Type': 'application/json',
       // tslint:disable-next-line: object-literal-key-quotes
       'autorizacion': 'Basic ' + credenciales
     });
@@ -58,7 +58,7 @@ export class FacturaService {
   createFactura(factura: Factura): Observable<Factura> {
     const credenciales = sessionStorage.getItem('token');
     const httpHeaders = new HttpHeaders({
-      'Content-Type': 'application/x-www-form-urlencoded',
+      'Content-Type': 'application/json',
       // tslint:disable-next-line: object-literal-key-quotes
       'autorizacion': 'Basic ' + credenciales
     });
@@ -81,7 +81,7 @@ export class FacturaService {
     cambiaEstadoFactura(id: string, estado: string): Observable<Factura> {
       const credenciales = sessionStorage.getItem('token');
       const httpHeaders = new HttpHeaders({
-        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Type': 'application/json',
         // tslint:disable-next-line: object-literal-key-quotes
         'autorizacion': 'Basic ' + credenciales
       });
@@ -92,7 +92,7 @@ export class FacturaService {
   filtrarFacturas(term: string): Observable<Factura[]> {
    const credenciales = sessionStorage.getItem('token');
    const httpHeaders = new HttpHeaders({
-     'Content-Type': 'application/x-www-form-urlencoded',
+     'Content-Type': 'application/json',
      // tslint:disable-next-line: object-literal-key-quotes
      'autorizacion': 'Basic ' + credenciales
    });
@@ -103,7 +103,7 @@ export class FacturaService {
   getFiltrarFacturasPorFecha(term1: string, term2: string): Observable<Factura[]> {
    const credenciales = sessionStorage.getItem('token');
    const httpHeaders = new HttpHeaders({
-     'Content-Type': 'application/x-www-form-urlencoded',
+     'Content-Type': 'application/json',
      // tslint:disable-next-line: object-literal-key-quotes
      'autorizacion': 'Basic ' + credenciales
    });

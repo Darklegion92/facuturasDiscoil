@@ -22,7 +22,7 @@ constructor(private http: HttpClient,
     public getUsers(): Observable<User[]> {
       const credenciales = sessionStorage.getItem('token');
       const httpHeaders = new HttpHeaders({
-        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Type': 'application/json',
         // tslint:disable-next-line: object-literal-key-quotes
         'autorizacion': 'Basic ' + credenciales
       });
@@ -32,7 +32,7 @@ constructor(private http: HttpClient,
   create(user: User): Observable<any> {
    const credenciales = sessionStorage.getItem('token');
    const httpHeaders = new HttpHeaders({
-     'Content-Type': 'application/x-www-form-urlencoded',
+     'Content-Type': 'application/json',
      // tslint:disable-next-line: object-literal-key-quotes
      'autorizacion': 'Basic ' + credenciales
    });
@@ -43,7 +43,7 @@ constructor(private http: HttpClient,
   getUser(id): Observable<User> {
     const credenciales = sessionStorage.getItem('token');
     const httpHeaders = new HttpHeaders({
-      'Content-Type': 'application/x-www-form-urlencoded',
+      'Content-Type': 'application/json',
       // tslint:disable-next-line: object-literal-key-quotes
       'autorizacion': 'Basic ' + credenciales
     });
@@ -61,7 +61,7 @@ constructor(private http: HttpClient,
   update(user: User): Observable<User> {
     const credenciales = sessionStorage.getItem('token');
     const httpHeaders = new HttpHeaders({
-      'Content-Type': 'application/x-www-form-urlencoded',
+      'Content-Type': 'application/json',
       // tslint:disable-next-line: object-literal-key-quotes
       'autorizacion': 'Basic ' + credenciales
     });

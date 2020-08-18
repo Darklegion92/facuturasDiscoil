@@ -22,7 +22,7 @@ constructor(private http: HttpClient,
             public getProductos(page: number): Observable<any> {
               const credenciales = sessionStorage.getItem('token');
               const httpHeaders = new HttpHeaders({
-                'Content-Type': 'application/x-www-form-urlencoded',
+                'Content-Type': 'application/json',
                 // tslint:disable-next-line: object-literal-key-quotes
                 'autorizacion': 'Basic ' + credenciales
               });
@@ -74,7 +74,7 @@ constructor(private http: HttpClient,
   getProducto(id): Observable<Producto> {
     const credenciales = sessionStorage.getItem('token');
     const httpHeaders = new HttpHeaders({
-      'Content-Type': 'application/x-www-form-urlencoded',
+      'Content-Type': 'application/json',
       // tslint:disable-next-line: object-literal-key-quotes
       'autorizacion': 'Basic ' + credenciales
     });
@@ -138,7 +138,7 @@ constructor(private http: HttpClient,
   filtrarProductos(term: string): Observable<Producto[]> {
     const credenciales = sessionStorage.getItem('token');
     const httpHeaders = new HttpHeaders({
-      'Content-Type': 'application/x-www-form-urlencoded',
+      'Content-Type': 'application/json',
       // tslint:disable-next-line: object-literal-key-quotes
       'autorizacion': 'Basic ' + credenciales
     });
