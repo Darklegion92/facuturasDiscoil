@@ -47,7 +47,6 @@ export class AuthService {
 
   login(usuario: User): Observable<any> {
       const urlEndpoint = `${this.urlBase}/usuario/login`;
-      console.log(urlEndpoint);
       // btoa encripta con base64
       const credenciales = btoa('angularapp' + ':' + '12345');
       const httpHeaders = new HttpHeaders({

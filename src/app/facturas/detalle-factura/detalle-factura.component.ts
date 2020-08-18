@@ -7,7 +7,6 @@ import { FuncionesService } from '../../generales/services/funciones.service';
 import { LoadingService } from '../../generales/services/loading.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import * as jsPDF from 'jspdf';
 
 @Component({
   selector: 'app-detalle-factura',
@@ -20,8 +19,7 @@ export class DetalleFacturaComponent implements OnInit {
   errores: string[];
 
 
-  estados: string[] = ['ANULADO', 'Seleccione'];
-  default: string;
+  estados: string[] = null;
   estadoFormulario: FormGroup;
 
   constructor(
@@ -37,18 +35,12 @@ export class DetalleFacturaComponent implements OnInit {
       estado: new FormControl(null)
     });
 
-    this.cargarSelects();
     this.loadingService.abrirModal();
 
     this.cargarFacura();
 
   }
 
-  cargarSelects(): void {
-    if (this.authService.hasRole('ROLE_ADMIN') ) {
-      this.estados = ['ANULADO', 'ESPERA', 'DESPACHO', 'ACTIVO', 'Seleccione'] ;
-    }
-  }
 
   cambiarEstadoFactura(fact: Factura) {
     this.loadingService.abrirModal();
@@ -74,56 +66,20 @@ export class DetalleFacturaComponent implements OnInit {
       id = params.get('id');
       // console.log('llego con id ' + id);
       this.facturaService.getFactura(id)
-      .subscribe(factura => {this.factura = factura,
-           this.loadingService.cerrarModal();
+      .subscribe(factura => {this.factura = factura;
+           // aqui verificamos los datos del select que cargara la tabla
+                             if (this.authService.hasRole('ROLE_ADMIN') ) {
+            this.estados = this.funcionesService.estadosFacturas(this.factura.estado, 'ADMIN');
+          } else {
+            this.estados = this.funcionesService.estadosFacturas(this.factura.estado, 'USER');
+          }
+           // tslint:disable-next-line: no-string-literal
+                             this.estadoFormulario.controls['estado'].setValue('Seleccione',
+           {onlySelf: true});
+                             this.loadingService.cerrarModal();
       });
     });
   }
-
-  generarFactura(factura: Factura): void {
-     const facturaPDF = new jsPDF();
-     facturaPDF.setFontSize(22);
-     facturaPDF.text('JOTACELL', 7, 7);
-     facturaPDF.setFontSize(16);
-     facturaPDF.text('Remision #: ' + factura.id , 10, 12);
-     facturaPDF.setFontSize(10);
-     facturaPDF.text('Cel: 311 2819686', 10, 16);
-     facturaPDF.setFontSize(6);
-     facturaPDF.text('Fecha: ' + factura.createAt , 5, 20);
-     facturaPDF.text('Descripcion: ' + factura.descripcion, 5, 22);
-     facturaPDF.text('Cliente: ' + factura.cliente.nombre + ' ' + factura.cliente.apellido , 5, 25);
-     facturaPDF.text('C.C: ' + factura.cliente.documento, 5, 27);
-     facturaPDF.text('------------------------------------------------------', 5, 29);
-     facturaPDF.text('Cant. '  , 5, 32);
-     facturaPDF.text('Artl. '  , 14, 32);
-     facturaPDF.text('Valor '  , 22, 32);
-     facturaPDF.text('Sub-Total '  , 35, 32);
-     let conta = 35;
-     for (const i of factura.items) {
-      facturaPDF.text('' + i.cantidad, 5, conta);
-      facturaPDF.text('' + i.producto.nombre , 11, conta);
-      conta += 2;
-      facturaPDF.text('' + this.formatNumber(i.producto.precio), 22, conta);
-      facturaPDF.text('' + this.formatNumber(i.importe), 34, conta);
-      conta += 5;
-  }
-     if (factura.descuento != null && factura.descuento > 0) {
-      facturaPDF.text('Descuento: ' + this.formatNumber(factura.descuento), 22, conta);
-      conta += 3;
-    }
-
-     facturaPDF.text('Total: ' + this.formatNumber(factura.total), 28, conta);
-     conta += 2;
-     facturaPDF.text('Observacion: ' + factura.observacion, 28, conta);
-     conta += 2;
-     facturaPDF.text('------------------------------------------------------', 5, conta);
-     conta += 5;
-     facturaPDF.text('* Para cualquiero tipo de reclamo ó ', 5, conta);
-     conta += 2;
-     facturaPDF.text(' garantia debe presentar este documento.* ', 5, conta);
-     conta += 2;
-     facturaPDF.save('prueba.pdf');
-   }
 
   formatNumber(cantidad: number): string {
       return this.funcionesService.formatNumber(cantidad);

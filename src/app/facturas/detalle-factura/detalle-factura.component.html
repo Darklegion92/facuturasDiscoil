@@ -11,13 +11,7 @@
               class="btn btn-outline-warning btn-xs my-2 mx-2">&laquo;
               Regresar
     </a>
-      <td >
-
-        <!-- <button (click)="generarFactura(factura)"
-              class="btn btn-rounded btn-outline-secondary btn-xs " type="button" >
-        Imprimir
-        </button> -->
-      </td>
+     
     </h4>
 
     <ul class="list-group my-2">
@@ -39,16 +33,31 @@
                 <strong>Estado: </strong> {{factura.estado | uppercase}}</li>
               </div>
             <div class="col-sm-2">
-            <li class="list-group-item">
+               <!-- aqui solo se renderiza un li inicio -->
+            <li *ngIf="!authService.hasRole('ROLE_ADMIN') && factura.estado !== 'ANULADO'"
+                class="list-group-item">
               <strong>Cambiar: </strong>
-              <form [formGroup]="estadoFormulario">
-                <select id="estado" formControlName="estado" 
-                    (change)="cambiarEstadoFactura(factura)">
-                    <option *ngFor="let estado of estados" 
-                    [ngValue]="estado">{{ estado }}</option>
-                </select>
-              </form>
+              <form 
+                  [formGroup]="estadoFormulario">
+                  <select id="estado" formControlName="estado" 
+                      (change)="cambiarEstadoFactura(factura)">
+                      <option *ngFor="let estado of estados" 
+                      [ngValue]="estado">{{ estado }}</option>
+                  </select>
+                </form>
             </li>
+            <li *ngIf="authService.hasRole('ROLE_ADMIN')"
+                class="list-group-item">
+                <strong>Cambiar: </strong>
+                <form [formGroup]="estadoFormulario">
+                  <select id="estado" formControlName="estado" 
+                      (change)="cambiarEstadoFactura(factura)">
+                      <option *ngFor="let estado of estados" 
+                      [ngValue]="estado">{{ estado }}</option>
+                  </select>
+                </form>
+            </li>
+              <!-- aqui solo se renderiza un li fin -->
             </div>
           </div>
         </ul>
@@ -93,7 +102,9 @@
       </div>
 
     </div>
-    <a 
-        class="btn btn-rounded btn-outline-warning btn-xs ">&laquo; Regresar</a>
+    <a [routerLink]="['/facturas']"
+              class="btn btn-outline-warning btn-xs my-2 mx-2">&laquo;
+              Regresar
+    </a>
   </div>
 </div>
