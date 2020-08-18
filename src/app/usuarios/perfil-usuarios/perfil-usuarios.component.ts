@@ -67,7 +67,7 @@ export class PerfilUsuariosComponent implements OnInit {
       this.userService.getUser(JSON.parse(sessionStorage.getItem('usuario'))._id)
         .subscribe(user => {this.user = user,
           user.facturas.forEach((item: any) => {
-            // aqui verificamos los datos del select
+            // aqui verificamos los datos del select que cargara la tabla
             if (this.authService.hasRole('ROLE_ADMIN') ) {
               this.estados = this.funcionesService.estadosFacturas(item.estado, 'ADMIN');
             } else {

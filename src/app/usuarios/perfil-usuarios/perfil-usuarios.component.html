@@ -119,7 +119,7 @@
             </td>
             <td>{{factura.createAt | date:"full"}}</td>
             <td >{{factura.estado}}</td>
-            <td *ngIf="estados">
+            <td *ngIf="estados" >
               <form [formGroup]="estadoFormulario">
                 <select id="estado" formControlName="estado" 
                     (change)="cambiarEstadoFactura(factura)">
