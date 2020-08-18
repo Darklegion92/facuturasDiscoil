@@ -137,8 +137,6 @@ export class FormUsuariosComponent implements OnInit {
       ])],
       documento: ['', Validators.compose([
         Validators.required,
-        Validators.minLength(8),
-        Validators.maxLength(10)
       ])],
       email: ['', Validators.compose([
          Validators.email
