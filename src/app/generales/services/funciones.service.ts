@@ -9,7 +9,7 @@ export class FuncionesService {
   constructor() { }
 
   configuracionUrlApi() {
-    return 'http://localhost:3001';
+    return 'http://localhost:3002';
   }
 
   formatNumber(numero: number): string {
@@ -100,11 +100,9 @@ export class FuncionesService {
     let result = estados.filter(filtro => filtro !== estadoFactura);
     if (role === 'ADMIN' ) {
         return  result;
-    } else if (estadoFactura !== 'ANULADO') {
+    } else {
           result = ['ANULADO', 'Seleccione'];
           return result;
-    } else {
-      return null;
     }
   }
 

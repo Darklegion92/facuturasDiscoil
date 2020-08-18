@@ -108,7 +108,7 @@
             <th >Detalle</th>
             <th>Fecha</th>
             <th>Estado</th>
-            <th *ngIf="estados">Cambiar</th>
+            <th>Cambiar</th>
             <th >Total</th>
           </tr>
         </thead>
@@ -119,14 +119,28 @@
             </td>
             <td>{{factura.createAt | date:"full"}}</td>
             <td >{{factura.estado}}</td>
-            <td *ngIf="estados" >
-              <form [formGroup]="estadoFormulario">
-                <select id="estado" formControlName="estado" 
-                    (change)="cambiarEstadoFactura(factura)">
-                    <option *ngFor="let estado of estados" 
-                    [ngValue]="estado">{{ estado }}</option>
-                </select>
-              </form>
+            <td  *ngIf="!authService.hasRole('ROLE_ADMIN')">
+              <span *ngIf="factura.estado === 'ANULADO'"> </span>
+                <form *ngIf="factura.estado !== 'ANULADO'"
+                  [formGroup]="estadoFormulario">
+                  <select id="estado" formControlName="estado" 
+                      (change)="cambiarEstadoFactura(factura)">
+                      <option *ngFor="let estado of estados" 
+                      [ngValue]="estado">{{ estado }}</option>
+                  </select>
+                </form>
+              
+            </td>
+            <td  *ngIf="authService.hasRole('ROLE_ADMIN')">
+             
+                <form [formGroup]="estadoFormulario">
+                  <select id="estado" formControlName="estado" 
+                      (change)="cambiarEstadoFactura(factura)">
+                      <option *ngFor="let estado of estados" 
+                      [ngValue]="estado">{{ estado }}</option>
+                  </select>
+                </form>
+              
             </td>
             <td class="text-right">{{formatNumber(factura.total)}}</td>
           </tr>
